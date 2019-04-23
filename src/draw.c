@@ -6,40 +6,39 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/22 17:33:22 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/22 21:41:56 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/23 20:12:55 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../inc/wolf.h"
 
-static void		draw_line(t_image *img, int x, int y, int color)
+void			draw_stack(t_stack **stack, t_stack *marker)
 {
-	while (x)
-		image_pixel_put(img, x--, y, color);
-	return ;
-}
+	int			color;
+	t_stack		*cur;
 
-static void		draw_col(t_image *img, int x, int y, int color)
-{
-	while (y)
-		image_pixel_put(img, x, y--, color);
-	return ;
-}
-
-void			draw_grid(t_image *img, t_mouse *m, int scale)
-{
-	(void)scale;
-	int			x;
-	int			y;
-
-	y = m->y > 0 && m->y < HEIGH ? m->y : 0;
-	while (y < HEIGH)
+	cur = *stack;
+	while (cur)
 	{
-		x = m->x > 0 && m->x < WIDTH ? m->x : 0;
-		while (x < WIDTH)
-			draw_line(img, x++, y, 0x00FFFF00);
-		draw_col(img, x, y++, 0x00FFFF00);
+		if (marker == cur)
+			color = 0x2B7EB0;
+		else
+			color = 0x002D4372;
+		grid_draw(cur->grid, color);
+		cur = cur->next;
 	}
+	return ;
+}
+
+void			marker_next(t_stack *marker)
+{
+	marker = marker->next;
+	return ;
+}
+
+void			marker_prev(t_stack *marker)
+{
+	marker = marker->prev;
 	return ;
 }

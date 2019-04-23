@@ -11,7 +11,7 @@
 #                                                         /                    #
 # **************************************************************************** #
 
-NAME = WOLF
+NAME = DOOM
 
 # COMPILER#
 
@@ -28,6 +28,8 @@ LIBDIR = ./lib/
 SRC =	main.c \
 		misc.c \
 		engine.c \
+		grid.c \
+		stack.c \
 		draw.c \
 		event.c \
 		framework.c \

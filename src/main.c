@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/02/15 01:06:33 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/22 22:02:33 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/23 20:17:39 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -36,10 +36,9 @@ static int				refresh_stack(t_engine *e)
 
 static int				refresh_stack(t_engine *e)
 {
-	//draw_grid(e->mlx->win->img, e->mouse, 1000);
-	mlx_put_image_to_window(e->mlx->id, e->mlx->win->id, e->mlx->win->img->id, 0, 0);
+	mlx_put_image_to_window(e->mlx->id, e->mlx->win->id, e->mlx->win->bg->id, 0, 0);
 	debug_display(e);
-	image_clear(e->mlx->win->img);
+	image_clear(e->mlx->win->bg);
 	event_refresh(e);
 	return (0);
 }

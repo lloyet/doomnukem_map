@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/16 19:44:01 by augberna     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/22 21:58:21 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/23 20:17:24 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,10 +26,17 @@
 
 # define RGBA(r,g,b,a)				(a << 24) | (r << 16) | (g << 8) | (b)
 
+# define CL_R						0x00FF0000
+# define CL_G						0x0000FF00
+# define CL_B						0x000000FF
+# define CL_A						0xFF000000
+
 # define WIDTH						1920
 # define WIDTH_2					WIDTH*0.5
 # define HEIGH						1080
 # define HEIGH_2					HEIGH*0.5
+
+# define G_SCALE					10
 
 # define M_DEG						180.0/M_PI
 # define M_RAD						M_PI/180.0
@@ -194,6 +201,7 @@
 # define CLIENTMESSAGE				33
 # define MAPPINGNOTIFY				34
 # define LASTEVENTS					35
+
 # define NOEVENTMASK				0L
 # define KEYPRESSMASK				(1L<<0)
 # define KEYRELEASEMASK				(1L<<1)
@@ -234,13 +242,6 @@ typedef struct		s_vertex
 	double			y;
 }					t_vertex;
 
-typedef struct 		s_grid
-{
-	int				scale;
-	int				cursorX;
-	int				cursorY;
-}					t_grid;
-
 typedef struct		s_mouse
 {
 	int				x;
@@ -269,6 +270,7 @@ typedef struct		s_mat2x2
 typedef struct		s_image
 {
 	void			*id;
+	void			*mlx_id;
 	char			*data;
 	int				bpp;
 	int				size_l;
@@ -277,15 +279,28 @@ typedef struct		s_image
 	int				heigh;
 }					t_image;
 
+typedef struct 		s_grid
+{
+	t_image			*img;
+	int				scale;
+	double			cursor_coef;
+}					t_grid;
+
+typedef struct		s_stack
+{
+	t_grid			*grid;
+	struct s_stack	*prev;
+	struct s_stack	*next;
+}					t_stack;
+
 typedef struct		s_window
 {
 	void			*id;
-	void			*mlx_id;
 	char			*title;
 	int				width;
 	int				heigh;
 	uint8_t			menu;
-	t_image			*img;
+	t_image			*bg;
 }					t_window;
 
 typedef struct		s_framework
@@ -298,6 +313,8 @@ typedef struct		s_framework
 typedef struct		s_engine
 {
 	t_framework		*mlx;
+	t_stack			**stack;
+	t_stack			*marker;
 	t_keyboard		*keyboard;
 	t_mouse			*mouse;
 	struct timeval	old;
@@ -307,6 +324,8 @@ typedef struct		s_engine
 int					mouse_motion_hook(int x, int y, t_mouse *mouse);
 int					mouse_press_hook(int key, int x, int y, t_mouse *mouse);
 int					mouse_release_hook(int key, int x, int y, t_mouse *mouse);
+
+uint8_t				key_is_pressed(t_keyboard *keyboard, int key);
 int					key_press_hook(int key, t_keyboard *keyboard);
 int					key_release_hook(int key, t_keyboard *keyboard);
 int					destroy_window_hook(t_engine *engine);
@@ -316,7 +335,6 @@ t_mouse				*new_mouse(t_keyboard *keyboard);
 void				keyboard_destroy(t_keyboard *keyboard);
 t_keyboard			*new_keyboard(int size);
 void				register_new_key(t_keyboard *keyboard, int key);
-uint8_t				key_is_pressed(t_keyboard *keyboard, int key);
 
 t_angle				*new_angle(double f_theta);
 void				angle_destroy(t_angle *angle);
@@ -328,7 +346,19 @@ void				debug_display(t_engine *e);
 
 void				event_refresh(t_engine *e);
 
-void				draw_grid(t_image *img, t_mouse *m, int scale);
+t_stack				*new_stack(t_grid *grid);
+void				stack_destroy(t_stack *stack);
+void				stack_del(t_stack **stack);
+void				stack_delone(t_stack **stack, t_stack *del);
+void				stack_add(t_stack **stack, t_stack *new_stack);
+
+t_grid				*new_grid(t_image *img);
+void				grid_destroy(t_grid *grid);
+void				grid_draw(t_grid *grid, int color);
+
+void				draw_stack(t_stack **stack, t_stack *marker);
+void				marker_next(t_stack *marker);
+void				marker_prev(t_stack *marker);
 
 t_engine			*new_engine(void);
 void				engine_destroy(t_engine *e);
@@ -345,10 +375,10 @@ t_window			*new_window(void *mlx_id, int width, int heigh,
 void				framework_destroy(t_framework *framework);
 t_framework			*new_framework(void);
 
-void				image_destroy(void *mlx, t_image *img);
-t_image				*new_image(void *mlx, int width, int heigh);
+void				image_destroy(t_image *img);
+t_image				*new_image(void *mlx, int width, int heigh, int color);
 void				image_clear(t_image *img);
 void				image_pixel_put(t_image *img, int x, int y, int color);
-int					image_get_pixel(t_image *img, int x, int y);
+void				image_fill(t_image *img, int color);
 
 #endif

@@ -6,17 +6,17 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/15 20:38:49 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/10 19:57:45 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/23 18:32:13 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-list_t			*ft_lstmap(list_t *lst, list_t *(*f)(list_t *elem))
+t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
 {
-	list_t		*new;
-	list_t		*list;
+	t_list		*new;
+	t_list		*list;
 
 	list = (*f)(lst);
 	new = list;

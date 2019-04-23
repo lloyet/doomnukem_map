@@ -6,21 +6,21 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/13 20:38:20 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/17 03:54:37 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/23 19:28:39 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../inc/wolf.h"
 
-void				image_destroy(void *mlx, t_image *img)
+void				image_destroy(t_image *img)
 {
-	mlx_destroy_image(mlx, img->id);
+	mlx_destroy_image(img->mlx_id, img->id);
 	ft_memdel((void **)&img);
 	return ;
 }
 
-t_image				*new_image(void *mlx, int width, int heigh)
+t_image				*new_image(void *mlx, int width, int heigh, int color)
 {
 	t_image			*img;
 
@@ -28,11 +28,12 @@ t_image				*new_image(void *mlx, int width, int heigh)
 		return (0);
 	if (!(img->id = mlx_new_image(mlx, width, heigh)))
 		return (0);
+	img->mlx_id = mlx;
 	img->width = width;
 	img->heigh = heigh;
-	img->data =
-		mlx_get_data_addr(img->id, &img->bpp, &img->size_l, &img->endian);
+	img->data = mlx_get_data_addr(img->id, &img->bpp, &img->size_l, &img->endian);
 	img->bpp /= 8;
+	image_fill(img, color);
 	return (img);
 }
 
@@ -48,7 +49,12 @@ void				image_pixel_put(t_image *img, int x, int y, int color)
 	return ;
 }
 
-int					image_get_pixel(t_image *img, int x, int y)
+void				image_fill(t_image *img, int color)
 {
-	return (*(int*)(img->data + ((x + y * img->width) * img->bpp)));
+	int				n;
+	
+	n = img->width * img->heigh * img->bpp;
+	while (n--)
+		*(int *)(img->data + n) = color;
+	return ;
 }

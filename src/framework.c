@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/13 20:37:34 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/18 17:05:25 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/23 19:47:31 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,7 +15,7 @@
 
 void				window_destroy(t_window *win)
 {
-	image_destroy(win->mlx_id, win->img);
+	image_destroy(win->bg);
 	ft_memdel((void **)&win);
 	return ;
 }
@@ -28,11 +28,10 @@ t_window			*new_window(void *mlx_id, int width, int heigh, char *title)
 		return (0);
 	if (!(win->id = mlx_new_window(mlx_id, width, heigh, title)))
 		return (0);
-	if (!(win->img = new_image(mlx_id, width, heigh)))
+	if (!(win->bg = new_image(mlx_id, width, heigh, 0x00003D5A)))
 		return (0);
 	win->width = width;
 	win->heigh = heigh;
-	win->mlx_id = mlx_id;
 	win->title = title;
 	return (win);
 }

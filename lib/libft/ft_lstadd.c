@@ -6,14 +6,14 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2018/10/15 20:24:24 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/10 19:58:45 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/23 18:31:18 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void			ft_lstadd(list_t **alst, list_t *new)
+void			ft_lstadd(t_list **alst, t_list *new)
 {
 	new->next = *alst;
 	*alst = new;
