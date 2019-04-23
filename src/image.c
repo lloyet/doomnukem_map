@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/13 20:38:20 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/23 19:28:39 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/23 23:43:42 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -20,7 +20,7 @@ void				image_destroy(t_image *img)
 	return ;
 }
 
-t_image				*new_image(void *mlx, int width, int heigh, int color)
+t_image				*new_image(void *mlx, int width, int heigh)
 {
 	t_image			*img;
 
@@ -33,7 +33,6 @@ t_image				*new_image(void *mlx, int width, int heigh, int color)
 	img->heigh = heigh;
 	img->data = mlx_get_data_addr(img->id, &img->bpp, &img->size_l, &img->endian);
 	img->bpp /= 8;
-	image_fill(img, color);
 	return (img);
 }
 
@@ -53,8 +52,8 @@ void				image_fill(t_image *img, int color)
 {
 	int				n;
 	
-	n = img->width * img->heigh * img->bpp;
-	while (n--)
-		*(int *)(img->data + n) = color;
+	n = (img->width * img->heigh - 1) * img->bpp;
+	while (n)
+		*(int *)(img->data + n--) = color;
 	return ;
 }

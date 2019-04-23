@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/16 19:44:01 by augberna     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/23 20:17:24 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/23 23:53:32 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -31,9 +31,9 @@
 # define CL_B						0x000000FF
 # define CL_A						0xFF000000
 
-# define WIDTH						1920
+# define WIDTH						1080
 # define WIDTH_2					WIDTH*0.5
-# define HEIGH						1080
+# define HEIGH						720
 # define HEIGH_2					HEIGH*0.5
 
 # define G_SCALE					10
@@ -376,7 +376,7 @@ void				framework_destroy(t_framework *framework);
 t_framework			*new_framework(void);
 
 void				image_destroy(t_image *img);
-t_image				*new_image(void *mlx, int width, int heigh, int color);
+t_image				*new_image(void *mlx, int width, int heigh);
 void				image_clear(t_image *img);
 void				image_pixel_put(t_image *img, int x, int y, int color);
 void				image_fill(t_image *img, int color);

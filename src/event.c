@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/22 17:52:25 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/22 21:46:21 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/23 23:42:42 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -43,7 +43,6 @@ static void			event_catch_keyboard(t_keyboard *k)
 
 void				event_refresh(t_engine *e)
 {
-	printf("REGKEY = %llu\n", e->keyboard->reg_key);
 	event_catch_mouse(e->keyboard);
 	event_catch_keyboard(e->keyboard);
 	if (key_is_pressed(e->keyboard, KEY_ESCAPE))

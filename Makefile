@@ -16,7 +16,7 @@ NAME = DOOM
 # COMPILER#
 
 CC	= clang
-CFLAGS = -Wall -Wextra -Werror -O3
+CFLAGS = -Wall -Wextra -Werror -O3 -ggdb
 
 # DIR
 

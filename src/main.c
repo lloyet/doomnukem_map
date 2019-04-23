@@ -6,36 +6,17 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/02/15 01:06:33 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/23 20:17:39 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/23 23:48:08 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../inc/wolf.h"
-/*
-static int				refresh_stack(t_engine *e)
-{
-	e->old.tv_sec = e->cur.tv_sec;
-	e->old.tv_usec = e->cur.tv_usec;
-	ray_cast(e, e->cam);
-	mlx_put_image_to_window(e->mlx->id, e->mlx->win->id, e->mlx->win->img->id,
-			0, 0);
-	debug_display(e);
-	image_clear(e->mlx->win->img);
-	gettimeofday(&e->cur, NULL);
-	if (e->cur.tv_usec < e->old.tv_usec)
-		e->mlx->frame = (e->old.tv_usec - e->cur.tv_usec) / 1000000.0;
-	else
-		e->mlx->frame = (e->cur.tv_usec - e->old.tv_usec) / 1000000.0;
-	event_docker(e, e->keyboard, e->cam);
-	event_refresh(e, e->keyboard, e->cam);
-	t_entityry_move(e->world, e->cam->entity);
-	camera_view(e->mlx->win, e->mouse, e->cam);
-	return (0);
-}*/
 
 static int				refresh_stack(t_engine *e)
 {
+	//image_fill(e->mlx->win->bg, 0xFFFFFF00);
+	image_pixel_put(e->mlx->win->bg, 10, 10, 0xFFFFFFFF);
 	mlx_put_image_to_window(e->mlx->id, e->mlx->win->id, e->mlx->win->bg->id, 0, 0);
 	debug_display(e);
 	image_clear(e->mlx->win->bg);
