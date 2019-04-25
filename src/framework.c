@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/13 20:37:34 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/23 23:45:35 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/26 00:36:25 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -30,7 +30,6 @@ t_window			*new_window(void *mlx_id, int width, int heigh, char *title)
 		return (0);
 	if (!(win->bg = new_image(mlx_id, width, heigh)))
 		return (0);
-	image_fill(win->bg, 0xFFFFFF00);
 	win->width = width;
 	win->heigh = heigh;
 	win->title = title;

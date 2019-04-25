@@ -38,7 +38,8 @@ SRC =	main.c \
 		hook_mouse.c \
 		image.c \
 		vector.c \
-		angle.c \
+		angle.c
+
 
 OBJ	= $(addprefix $(OBJDIR), $(SRC:.c=.o))
 
@@ -65,7 +66,7 @@ ifeq ($(shell uname), Darwin)
 endif
 
 .PHONY: all clean fclean re
-all: $(OBJDIR) $(LIBFT) $(LIBMLX) $(INCDIR) $(NAME)
+all: $(OBJDIR) $(LIBFT) $(LIBMLX) $(INC) $(NAME)
 
 $(NAME): $(OBJ)
 	@$(CC) $(OBJ) $(MLXLINK) $(LIBLINK) -lm -lpthread -o $(NAME)

@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/13 20:38:20 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/23 23:43:42 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/26 01:34:08 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -52,8 +52,11 @@ void				image_fill(t_image *img, int color)
 {
 	int				n;
 	
-	n = (img->width * img->heigh - 1) * img->bpp;
-	while (n)
-		*(int *)(img->data + n--) = color;
+	n = 0;
+	while (img->data[n])
+	{
+			*(int *)(img->data + n * img->bpp) = color;
+		n += img->bpp;
+	}
 	return ;
 }

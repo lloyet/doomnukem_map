@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/16 19:44:01 by augberna     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/23 23:53:32 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/26 01:14:53 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -31,9 +31,9 @@
 # define CL_B						0x000000FF
 # define CL_A						0xFF000000
 
-# define WIDTH						1080
+# define WIDTH						1920
 # define WIDTH_2					WIDTH*0.5
-# define HEIGH						720
+# define HEIGH						1080
 # define HEIGH_2					HEIGH*0.5
 
 # define G_SCALE					10
@@ -296,11 +296,11 @@ typedef struct		s_stack
 typedef struct		s_window
 {
 	void			*id;
-	char			*title;
+	t_image			*bg;
 	int				width;
 	int				heigh;
+	char			*title;
 	uint8_t			menu;
-	t_image			*bg;
 }					t_window;
 
 typedef struct		s_framework

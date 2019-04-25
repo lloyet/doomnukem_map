@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/02/15 01:06:33 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/23 23:48:08 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/26 01:27:56 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,8 +15,7 @@
 
 static int				refresh_stack(t_engine *e)
 {
-	//image_fill(e->mlx->win->bg, 0xFFFFFF00);
-	image_pixel_put(e->mlx->win->bg, 10, 10, 0xFFFFFFFF);
+	image_fill(e->mlx->win->bg, 0xFFFF0000);
 	mlx_put_image_to_window(e->mlx->id, e->mlx->win->id, e->mlx->win->bg->id, 0, 0);
 	debug_display(e);
 	image_clear(e->mlx->win->bg);
