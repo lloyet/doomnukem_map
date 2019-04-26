@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/22 17:33:22 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/23 20:12:55 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/26 04:48:48 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,7 +22,7 @@ void			draw_stack(t_stack **stack, t_stack *marker)
 	while (cur)
 	{
 		if (marker == cur)
-			color = 0x2B7EB0;
+			color = 0x002B7EB0;
 		else
 			color = 0x002D4372;
 		grid_draw(cur->grid, color);

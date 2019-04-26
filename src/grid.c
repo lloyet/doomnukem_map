@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/23 17:04:49 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/23 20:09:37 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/26 04:49:14 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -36,5 +36,6 @@ void			grid_draw(t_grid *grid, int color)
 {
 	(void)grid;
 	(void)color;
+	image_pixel_put(grid->img, 300, 300, color);
 	return ;
 }
