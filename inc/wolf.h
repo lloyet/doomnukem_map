@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/16 19:44:01 by augberna     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/26 01:14:53 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/27 06:46:03 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,10 +26,16 @@
 
 # define RGBA(r,g,b,a)				(a << 24) | (r << 16) | (g << 8) | (b)
 
-# define CL_R						0x00FF0000
-# define CL_G						0x0000FF00
-# define CL_B						0x000000FF
-# define CL_A						0xFF000000
+# define CLR_R						0x00FF0000
+# define CLR_G						0x0000FF00
+# define CLR_B						0x000000FF
+# define CLR_A						0xFF000000
+
+# define CLR_BG						0x00002B36
+# define CLR_LAYER					0x00CB4B16
+# define CLR_SHADOW					0x006C71C4
+# define CLR_VAR					0x00D33682
+# define CLR_STR					0x002AA198
 
 # define WIDTH						1920
 # define WIDTH_2					WIDTH*0.5
@@ -286,12 +292,12 @@ typedef struct 		s_grid
 	double			cursor_coef;
 }					t_grid;
 
-typedef struct		s_stack
+typedef struct		s_cycle
 {
 	t_grid			*grid;
-	struct s_stack	*prev;
-	struct s_stack	*next;
-}					t_stack;
+	struct s_cycle	*prev;
+	struct s_cycle	*next;
+}					t_cycle;
 
 typedef struct		s_window
 {
@@ -313,8 +319,8 @@ typedef struct		s_framework
 typedef struct		s_engine
 {
 	t_framework		*mlx;
-	t_stack			**stack;
-	t_stack			*marker;
+	t_cycle			*board;
+	t_cycle			**marker;
 	t_keyboard		*keyboard;
 	t_mouse			*mouse;
 	struct timeval	old;
@@ -346,19 +352,22 @@ void				debug_display(t_engine *e);
 
 void				event_refresh(t_engine *e);
 
-t_stack				*new_stack(t_grid *grid);
-void				stack_destroy(t_stack *stack);
-void				stack_del(t_stack **stack);
-void				stack_delone(t_stack **stack, t_stack *del);
-void				stack_add(t_stack **stack, t_stack *new_stack);
+t_cycle				*new_cycle(t_grid *grid);
+void				cycle_destroy(t_cycle *cycle);
+void				cycle_del(t_cycle **cycle);
+void				cycle_delone(t_cycle **cycle, t_cycle **marker);
+void				cycle_insert(t_cycle **marker, t_cycle *new_cycle);
+void				cycle_draw(t_cycle **cycle, t_cycle **marker);
+int					cycle_len(t_cycle **cycle);
+int					cycle_index(t_cycle **acycle, t_cycle **marker);
+
 
 t_grid				*new_grid(t_image *img);
 void				grid_destroy(t_grid *grid);
 void				grid_draw(t_grid *grid, int color);
 
-void				draw_stack(t_stack **stack, t_stack *marker);
-void				marker_next(t_stack *marker);
-void				marker_prev(t_stack *marker);
+void				marker_next(t_cycle *marker);
+void				marker_prev(t_cycle *marker);
 
 t_engine			*new_engine(void);
 void				engine_destroy(t_engine *e);
@@ -376,7 +385,7 @@ void				framework_destroy(t_framework *framework);
 t_framework			*new_framework(void);
 
 void				image_destroy(t_image *img);
-t_image				*new_image(void *mlx, int width, int heigh);
+t_image				*new_image(void *mlx_id, int width, int heigh);
 void				image_clear(t_image *img);
 void				image_pixel_put(t_image *img, int x, int y, int color);
 void				image_fill(t_image *img, int color);

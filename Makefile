@@ -29,7 +29,7 @@ SRC =	main.c \
 		misc.c \
 		engine.c \
 		grid.c \
-		stack.c \
+		cycle.c \
 		draw.c \
 		event.c \
 		framework.c \

@@ -3,51 +3,43 @@
 /*                                                              /             */
 /*   ft_itoa.c                                        .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
-/*   By: lloyet <marvin@le-101.fr>                  +:+   +:    +:    +:+     */
+/*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2017/12/10 18:40:42 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2018/01/26 22:23:52 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/26 22:47:39 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void		ft_is_negative(int *n, int *negative)
+char				*ft_itoa(int value)
 {
-	if (*n < 0)
-	{
-		*n *= -1;
-		*negative = 1;
-	}
-	return ;
-}
+	char			*it;
+	const char		buff[10] = "0123456789";
+	long			nb;
+	int				n;
+	size_t			size;
 
-char			*ft_itoa(int n)
-{
-	int		mem;
-	int		i;
-	int		neg;
-	char	*str;
-
-	mem = n;
-	i = 2;
-	neg = 0;
-	ft_is_negative(&n, &neg);
-	if (n == -2147483648)
-		return (ft_strdup("-2147483648"));
-	while (mem /= 10)
-		i++;
-	i += neg;
-	if (!(str = (char *)malloc(sizeof(char) * i)))
-		return (NULL);
-	str[--i] = '\0';
-	while (i--)
+	n = value < 0 ? 1 : 0;
+	nb = value < 0 ? (long)value*-1 : (long)value;
+	size = value != 0 ? 0 : 1;
+	while (nb)
 	{
-		str[i] = n % 10 + '0';
-		n = n / 10;
+		size++;
+		nb /= 10;
 	}
-	if (neg)
-		str[0] = '-';
-	return (str);
+	size += n;
+	if (!(it = (char*)ft_memalloc(sizeof(char)*size + 1)))
+		return (0);
+	it[0] = '0';
+	it[size+1] = 0;
+	nb = value < 0 ? (long)value*-1 : (long)value;
+	while (nb)
+	{
+		it[--size] = buff[nb % 10];
+		nb /= 10;
+	}
+	it[0] = value < 0 ? '-' : it[0];
+	return (it);
 }

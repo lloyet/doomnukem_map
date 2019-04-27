@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2017/12/10 14:30:16 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/23 18:30:39 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/26 21:58:45 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -43,7 +43,7 @@ int					ft_isprint(int c);
 int					ft_tolower(int c);
 int					ft_toupper(int c);
 int					ft_atoi(const char *str);
-char				*ft_itoa(int n);
+char				*ft_itoa(int value);
 char				*ft_strdup(const char *s);
 size_t				ft_strlen(const char *s);
 char				*ft_strcpy(char *dest, const char *src);

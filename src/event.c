@@ -6,23 +6,30 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/22 17:52:25 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/26 00:59:11 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/27 07:12:48 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../inc/wolf.h"
 
-static void			event_catch_mouse(t_keyboard *k)
+static void			event_catch_mouse(t_engine *e)
 {
+	t_keyboard 		*k;
+
+	k = e->keyboard;
 	if (key_is_pressed(k, MOUSE_SCROLL_UP))
 	{
 		k->reg_key &= k->reg_key ^ (1 << k->reg_id[MOUSE_SCROLL_UP]);
+		if (key_is_pressed(k, KEY_CTRL_LEFT))
+			cycle_insert(e->marker, new_cycle(new_grid(new_image(e->mlx->id, WIDTH, HEIGH))));
 		ft_putstr("mouseScrollUp\n");
 	}
 	else if (key_is_pressed(k, MOUSE_SCROLL_DOWN))
 	{
 		k->reg_key &= k->reg_key ^ (1 << k->reg_id[MOUSE_SCROLL_DOWN]);
+		if (key_is_pressed(k, KEY_CTRL_LEFT))
+			cycle_delone(&e->board, e->marker);
 		ft_putstr("mouseScrollDown\n");
 	}
 	if (key_is_pressed(k, MOUSE_RIGHT))
@@ -34,8 +41,11 @@ static void			event_catch_mouse(t_keyboard *k)
 	return ;
 }
 
-static void			event_catch_keyboard(t_keyboard *k)
+static void			event_catch_keyboard(t_engine *e)
 {
+	t_keyboard		*k;
+
+	k = e->keyboard;
 	if (key_is_pressed(k, KEY_SPACE))
 		ft_putstr("Space\n");
 	return ;
@@ -43,9 +53,9 @@ static void			event_catch_keyboard(t_keyboard *k)
 
 void				event_refresh(t_engine *e)
 {
-	event_catch_mouse(e->keyboard);
-	event_catch_keyboard(e->keyboard);
 	if (key_is_pressed(e->keyboard, KEY_ESCAPE))
 		engine_destroy(e);
+	event_catch_mouse(e);
+	event_catch_keyboard(e);
 	return ;
 }
