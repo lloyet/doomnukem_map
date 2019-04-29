@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/16 19:44:01 by augberna     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/27 06:46:03 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/29 23:38:48 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -235,6 +235,12 @@
 # define COLORMAPCHANGEMASK			(1L<<23)
 # define OWNERGRABBUTTONMASK		(1L<<24)
 
+typedef enum
+{
+	E_CYCLE = 1,
+	E_NOCYCLE = 0
+}					e_cycle;
+
 typedef struct		s_keyboard
 {
 	uint64_t		reg_key;
@@ -247,6 +253,11 @@ typedef struct		s_vertex
 	double			x;
 	double			y;
 }					t_vertex;
+
+typedef struct		s_gui
+{
+	
+}					t_gui;
 
 typedef struct		s_mouse
 {
@@ -299,6 +310,14 @@ typedef struct		s_cycle
 	struct s_cycle	*next;
 }					t_cycle;
 
+typedef struct		s_node
+{
+	void			*content;
+	size_t			size;
+	struct s_node	*parent;
+	struct s_node	*child;
+}					t_node;
+
 typedef struct		s_window
 {
 	void			*id;
@@ -316,11 +335,18 @@ typedef struct		s_framework
 	double			frame;
 }					t_framework;
 
+typedef struct		s_sketch
+{
+	t_cycle			*board;
+	t_cycle			**marker;
+	int				size;
+}					t_sketch;
+
+
 typedef struct		s_engine
 {
 	t_framework		*mlx;
-	t_cycle			*board;
-	t_cycle			**marker;
+	t_sketch		*sketch;
 	t_keyboard		*keyboard;
 	t_mouse			*mouse;
 	struct timeval	old;
@@ -352,15 +378,24 @@ void				debug_display(t_engine *e);
 
 void				event_refresh(t_engine *e);
 
-t_cycle				*new_cycle(t_grid *grid);
-void				cycle_destroy(t_cycle *cycle);
-void				cycle_del(t_cycle **cycle);
-void				cycle_delone(t_cycle **cycle, t_cycle **marker);
-void				cycle_insert(t_cycle **marker, t_cycle *new_cycle);
-void				cycle_draw(t_cycle **cycle, t_cycle **marker);
-int					cycle_len(t_cycle **cycle);
-int					cycle_index(t_cycle **acycle, t_cycle **marker);
+t_node				*new_tree(void *content, size_t n, e_cycle cycle);
+t_node				*new_node(void *content, size_t n);
+void				node_destroy(t_node *node, void (*del)(void *, size_t));
+void				node_del(t_node **anode, void (*del)(void *, size_t));
+void				node_insert(t_node **cursor, t_node *new);
+void				node_iter(t_node **cursor, void (*f)(t_node *node));
 
+t_cycle				*new_cycle(t_grid *grid, e_cycle is_cycle);
+void				cycle_destroy(t_cycle *cycle);
+void				cycle_delall(t_cycle **board);
+void				cycle_delone(t_cycle **board, t_cycle **marker);
+void				cycle_insert(t_cycle **marker, t_cycle *new_cycle);
+void				cycle_draw(t_cycle **board, t_cycle **marker);
+int					cycle_index(t_cycle **board, t_cycle **marker);
+int					cycle_detector(t_cycle *cycle);
+
+t_sketch			*new_sketch(void *mlx_id);
+void				sketch_destroy(t_sketch *sketch);
 
 t_grid				*new_grid(t_image *img);
 void				grid_destroy(t_grid *grid);

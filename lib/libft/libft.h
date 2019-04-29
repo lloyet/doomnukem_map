@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2017/12/10 14:30:16 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/26 21:58:45 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/28 23:17:54 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,11 +19,11 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-typedef struct			list_s
+typedef struct			s_list
 {
 	void				*content;
 	size_t				size;
-	struct list_s		*next;
+	struct s_list		*next;
 }						t_list;
 
 void				ft_bzero(void *str, size_t n);

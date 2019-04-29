@@ -34,9 +34,11 @@ SRC =	main.c \
 		event.c \
 		framework.c \
 		device.c \
+		sketch.c \
 		hook_key.c \
 		hook_mouse.c \
 		image.c \
+		node.c \
 		vector.c \
 		angle.c
 
