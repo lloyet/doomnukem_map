@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/16 19:44:01 by augberna     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/29 23:38:48 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/30 21:49:45 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -235,12 +235,6 @@
 # define COLORMAPCHANGEMASK			(1L<<23)
 # define OWNERGRABBUTTONMASK		(1L<<24)
 
-typedef enum
-{
-	E_CYCLE = 1,
-	E_NOCYCLE = 0
-}					e_cycle;
-
 typedef struct		s_keyboard
 {
 	uint64_t		reg_key;
@@ -266,27 +260,32 @@ typedef struct		s_mouse
 	t_keyboard		*keyboard;
 }					t_mouse;
 
-typedef struct		s_angle
+typedef struct 		s_grid
 {
-	double			f_theta;
-	double			f_cos;
-	double			f_sin;
-}					t_angle;
+	t_image			*img;
+	int				scale;
+	double			cursor_coef;
+}					t_grid;
 
-typedef struct		s_vector2d
+typedef struct		s_node
 {
-	double			x;
-	double			y;
-}					t_vector2d;
+	void			*content;
+	struct s_node	*parent;
+	struct s_node	*child;
+}					t_node;
 
-typedef struct		s_mat2x2
+typedef struct		s_payload
 {
-	double			m[2][2];
-}					t_mat2x2;
+	size_t			n;
+	t_node			*buffer;
+	t_node			**iterator;
+	void 			(*destroy)(void *elem);
+}					t_payload;
 
 typedef struct		s_image
 {
 	void			*id;
+	void			*win_id;
 	void			*mlx_id;
 	char			*data;
 	int				bpp;
@@ -295,28 +294,6 @@ typedef struct		s_image
 	int				width;
 	int				heigh;
 }					t_image;
-
-typedef struct 		s_grid
-{
-	t_image			*img;
-	int				scale;
-	double			cursor_coef;
-}					t_grid;
-
-typedef struct		s_cycle
-{
-	t_grid			*grid;
-	struct s_cycle	*prev;
-	struct s_cycle	*next;
-}					t_cycle;
-
-typedef struct		s_node
-{
-	void			*content;
-	size_t			size;
-	struct s_node	*parent;
-	struct s_node	*child;
-}					t_node;
 
 typedef struct		s_window
 {
@@ -335,18 +312,11 @@ typedef struct		s_framework
 	double			frame;
 }					t_framework;
 
-typedef struct		s_sketch
-{
-	t_cycle			*board;
-	t_cycle			**marker;
-	int				size;
-}					t_sketch;
-
-
 typedef struct		s_engine
 {
 	t_framework		*mlx;
 	t_sketch		*sketch;
+	t_payload		*loader;
 	t_keyboard		*keyboard;
 	t_mouse			*mouse;
 	struct timeval	old;
@@ -368,31 +338,24 @@ void				keyboard_destroy(t_keyboard *keyboard);
 t_keyboard			*new_keyboard(int size);
 void				register_new_key(t_keyboard *keyboard, int key);
 
-t_angle				*new_angle(double f_theta);
-void				angle_destroy(t_angle *angle);
-void				angle_reset(t_angle *angle, double f_theta);
-double				t_angleo_degree(t_vector2d *v);
-void				t_angleo_radian(t_vector2d *v, double deg);
-
 void				debug_display(t_engine *e);
 
 void				event_refresh(t_engine *e);
 
-t_node				*new_tree(void *content, size_t n, e_cycle cycle);
-t_node				*new_node(void *content, size_t n);
-void				node_destroy(t_node *node, void (*del)(void *, size_t));
-void				node_del(t_node **anode, void (*del)(void *, size_t));
-void				node_insert(t_node **cursor, t_node *new);
-void				node_iter(t_node **cursor, void (*f)(t_node *node));
+t_payload			*new_payload(void *content, void (*destroy)(void *elem));
+void				payload_destroy(t_payload *p);
+void				payload_add(t_payload *p, t_node **iterator, void *content);
+void				payload_remove(t_payload *p, t_node **iterator);
+void				payload_iter(t_payload *p, void (*f)(void *content));
 
-t_cycle				*new_cycle(t_grid *grid, e_cycle is_cycle);
-void				cycle_destroy(t_cycle *cycle);
-void				cycle_delall(t_cycle **board);
-void				cycle_delone(t_cycle **board, t_cycle **marker);
-void				cycle_insert(t_cycle **marker, t_cycle *new_cycle);
-void				cycle_draw(t_cycle **board, t_cycle **marker);
-int					cycle_index(t_cycle **board, t_cycle **marker);
-int					cycle_detector(t_cycle *cycle);
+void				tree_destroy(t_node **anode, void (*del)(void *));
+int					tree_cycle_detector(t_node **tree);
+
+t_node				*new_node(void *content);
+void				node_destroy(t_node *node, void (*del)(void *));
+void				node_insert(t_node **iterator, t_node *new);
+void				node_remove(t_node **iterator, void (*del)(void *));
+void				node_iter(t_node **iterator, void (*f)(t_node *node));
 
 t_sketch			*new_sketch(void *mlx_id);
 void				sketch_destroy(t_sketch *sketch);
@@ -401,17 +364,12 @@ t_grid				*new_grid(t_image *img);
 void				grid_destroy(t_grid *grid);
 void				grid_draw(t_grid *grid, int color);
 
-void				marker_next(t_cycle *marker);
-void				marker_prev(t_cycle *marker);
+t_payload			*new_loader(t_image *img);
+void				loader_push_stack(t_payload *loader, t_image *img);
+void				loader_pull_screen(t_payload *loader);
 
 t_engine			*new_engine(void);
 void				engine_destroy(t_engine *e);
-
-void				mat2x2_set_rot_y(t_angle *t);
-void				vector_vec_product(t_vector2d *v_dest, t_vector2d *v_mult);
-void				vector_rot_y(t_vector2d *v);
-void				vector_reset(t_vector2d *v);
-void				vector_set(t_vector2d *v, double x, double y);
 
 void				window_destroy(t_window *win);
 t_window			*new_window(void *mlx_id, int width, int heigh,
@@ -421,6 +379,8 @@ t_framework			*new_framework(void);
 
 void				image_destroy(t_image *img);
 t_image				*new_image(void *mlx_id, int width, int heigh);
+void				image_attach(t_image *img, t_window *win);
+
 void				image_clear(t_image *img);
 void				image_pixel_put(t_image *img, int x, int y, int color);
 void				image_fill(t_image *img, int color);

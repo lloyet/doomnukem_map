@@ -14,12 +14,10 @@
 NAME = DOOM
 
 # COMPILER#
-
 CC	= clang
 CFLAGS = -Wall -Wextra -Werror -O3 -ggdb
 
 # DIR
-
 SRCDIR = ./src/
 INCDIR = ./inc/
 OBJDIR = ./obj/
@@ -29,8 +27,8 @@ SRC =	main.c \
 		misc.c \
 		engine.c \
 		grid.c \
-		cycle.c \
 		draw.c \
+		loader.c \
 		event.c \
 		framework.c \
 		device.c \
@@ -42,18 +40,15 @@ SRC =	main.c \
 		vector.c \
 		angle.c
 
-
 OBJ	= $(addprefix $(OBJDIR), $(SRC:.c=.o))
 
 # FT_LIBRARY#
-
 FT = $(addprefix $(LIBDIR), libft)
 LIBFT = $(addprefix $(FT), libft.a)
 LIBINC = -I $(FT)
 LIBLINK	= -L $(FT) -lft
 
 # MINILIBX LIBRARY
-
 ifeq ($(shell uname), Linux)
 	MLX = $(addprefix $(LIBDIR), minilibx_linux)
 	LIBMLX = $(addprefix $(MLX), libmlx.a)

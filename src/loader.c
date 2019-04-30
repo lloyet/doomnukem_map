@@ -1,36 +1,46 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   draw.c                                           .::    .:/ .      .::   */
+/*   loader.c                                         .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/04/22 17:33:22 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 21:44:01 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Created: 2019/04/30 21:19:50 by lloyet       #+#   ##    ##    #+#       */
+/*   Updated: 2019/04/30 21:41:55 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../inc/wolf.h"
 
-void				image_clear(t_image *img)
+static void			loader_destroy(void *img)
 {
-	ft_bzero(img->data, img->width * img->heigh * img->bpp);
+	image_destroy((t_image*)img);
 	return ;
 }
 
-void				image_pixel_put(t_image *img, int x, int y, int color)
+static void			loader_refresh(void *img)
 {
-	*(int *)(img->data + ((x + y * img->width) * img->bpp)) = color;
+	t_image			*img_;
+
+	img_ = (t_image*)img;
+	mlx_put_image_to_window(img_->mlx_id, img_->win_id, img_->id, 0, 0);
 	return ;
 }
 
-void				image_fill(t_image *img, int color)
+t_payload			*new_loader(t_image *img)
 {
-	int				n;
-	
-	n = (img->width - 1) + ((img->heigh - 1)*img->width);
-	while (n)
-			*(int *)(img->data + (n-- * img->bpp)) = color;
+	return (new_payload((void*)img, &loader_destroy));
+}
+
+void				loader_push_stack(t_payload *loader, t_image *img)
+{
+	payload_add(loader, loader->iterator, (void*)img);
+	return ;
+}
+
+void				loader_pull_screen(t_payload *loader)
+{
+	payload_iter(loader, &loader_refresh);
 	return ;
 }

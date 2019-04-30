@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/13 20:38:20 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/26 22:20:12 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/30 21:44:44 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -36,24 +36,8 @@ t_image				*new_image(void *mlx_id, int width, int heigh)
 	return (img);
 }
 
-void				image_clear(t_image *img)
+void				image_attach(t_image *img, t_window *win)
 {
-	ft_bzero(img->data, img->width * img->heigh * img->bpp);
-	return ;
-}
-
-void				image_pixel_put(t_image *img, int x, int y, int color)
-{
-	*(int *)(img->data + ((x + y * img->width) * img->bpp)) = color;
-	return ;
-}
-
-void				image_fill(t_image *img, int color)
-{
-	int				n;
-	
-	n = (img->width - 1) + ((img->heigh - 1)*img->width);
-	while (n)
-			*(int *)(img->data + (n-- * img->bpp)) = color;
+	img->win_id = win->id;
 	return ;
 }

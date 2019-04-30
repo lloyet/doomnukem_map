@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/13 20:07:01 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/27 18:24:23 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/30 21:49:19 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -48,6 +48,8 @@ t_engine				*new_engine(void)
 	if (!(e->mouse = new_mouse(e->keyboard)))
 		return (0);
 	if (!(e->sketch = new_sketch(e->mlx->id)))
+		return (0);
+	if (!(e->loader = new_loader(e->mlx->win->bg)))
 		return (0);
 	device_register_keys(e->keyboard);
 	return (e);

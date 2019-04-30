@@ -1,36 +1,46 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   draw.c                                           .::    .:/ .      .::   */
+/*   tree.c                                           .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/04/22 17:33:22 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 21:44:01 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Created: 2019/04/30 11:48:10 by lloyet       #+#   ##    ##    #+#       */
+/*   Updated: 2019/04/30 20:53:38 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../inc/wolf.h"
 
-void				image_clear(t_image *img)
+void			tree_destroy(t_node **tree, void (*del)(void *))
 {
-	ft_bzero(img->data, img->width * img->heigh * img->bpp);
-	return ;
-}
-
-void				image_pixel_put(t_image *img, int x, int y, int color)
-{
-	*(int *)(img->data + ((x + y * img->width) * img->bpp)) = color;
-	return ;
-}
-
-void				image_fill(t_image *img, int color)
-{
-	int				n;
+	t_node		*cur;
 	
-	n = (img->width - 1) + ((img->heigh - 1)*img->width);
-	while (n)
-			*(int *)(img->data + (n-- * img->bpp)) = color;
+	cur = *tree;
+	while (cur)
+	{
+		node_destroy(cur, del);
+		cur = cur->child;
+		if (cur == *tree)
+			break;
+	}
+	node_destroy(*tree, del);
 	return ;
+}
+
+int				tree_cycle_detector(t_node **tree)
+{
+	t_node		*anchor;
+	t_node		*cur;
+
+	anchor = *tree;
+	cur = *tree;
+	while (cur)
+	{
+		cur = cur->child;
+		if (anchor == cur)
+			return (1);
+	}
+	return (0);
 }

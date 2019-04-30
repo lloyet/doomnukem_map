@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/22 17:52:25 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/27 18:25:46 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/04/30 09:49:25 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,7 +22,7 @@ static void			event_catch_mouse(t_engine *e)
 	{
 		k->reg_key &= k->reg_key ^ (1 << k->reg_id[MOUSE_SCROLL_UP]);
 		if (key_is_pressed(k, KEY_CTRL_LEFT))
-			cycle_insert(e->sketch->marker, new_cycle(new_grid(new_image(e->mlx->id, WIDTH, HEIGH))));
+			cycle_insert(e->sketch->marker, new_cycle(new_grid(new_image(e->mlx->id, WIDTH, HEIGH)), E_CYCLE));
 		else
 			ft_putstr("Zoom In\n");
 	}
