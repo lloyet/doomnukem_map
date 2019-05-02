@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/16 19:44:01 by augberna     #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 21:49:45 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/02 04:40:04 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -260,13 +260,6 @@ typedef struct		s_mouse
 	t_keyboard		*keyboard;
 }					t_mouse;
 
-typedef struct 		s_grid
-{
-	t_image			*img;
-	int				scale;
-	double			cursor_coef;
-}					t_grid;
-
 typedef struct		s_node
 {
 	void			*content;
@@ -295,10 +288,17 @@ typedef struct		s_image
 	int				heigh;
 }					t_image;
 
+typedef struct 		s_layer
+{
+	t_image			*img;
+	int				color;
+	int				scale;
+	double			cursor_coef;
+}					t_layer;
+
 typedef struct		s_window
 {
 	void			*id;
-	t_image			*bg;
 	int				width;
 	int				heigh;
 	char			*title;
@@ -315,7 +315,6 @@ typedef struct		s_framework
 typedef struct		s_engine
 {
 	t_framework		*mlx;
-	t_sketch		*sketch;
 	t_payload		*loader;
 	t_keyboard		*keyboard;
 	t_mouse			*mouse;
@@ -347,6 +346,7 @@ void				payload_destroy(t_payload *p);
 void				payload_add(t_payload *p, t_node **iterator, void *content);
 void				payload_remove(t_payload *p, t_node **iterator);
 void				payload_iter(t_payload *p, void (*f)(void *content));
+int					payload_index(t_payload *p, t_node **iterator);
 
 void				tree_destroy(t_node **anode, void (*del)(void *));
 int					tree_cycle_detector(t_node **tree);
@@ -355,18 +355,19 @@ t_node				*new_node(void *content);
 void				node_destroy(t_node *node, void (*del)(void *));
 void				node_insert(t_node **iterator, t_node *new);
 void				node_remove(t_node **iterator, void (*del)(void *));
-void				node_iter(t_node **iterator, void (*f)(t_node *node));
+void				node_iter(t_node **iterator, void (*f)(void *content));
 
-t_sketch			*new_sketch(void *mlx_id);
-void				sketch_destroy(t_sketch *sketch);
+t_layer				*new_layer(t_image *img);
+void				layer_destroy(t_layer *layer);
+void				layer_draw(t_layer *layer);
 
-t_grid				*new_grid(t_image *img);
-void				grid_destroy(t_grid *grid);
-void				grid_draw(t_grid *grid, int color);
-
-t_payload			*new_loader(t_image *img);
-void				loader_push_stack(t_payload *loader, t_image *img);
-void				loader_pull_screen(t_payload *loader);
+t_payload			*new_loader(t_layer *layer);
+void				loader_add(t_payload *loader, t_layer *layer);
+void				loader_refresh(t_payload *loader);
+void				loader_remove(t_payload *loader);
+void				loader_pull(t_payload *loader);
+void				loader_prev(t_payload *loader);
+void				loader_next(t_payload *loader);
 
 t_engine			*new_engine(void);
 void				engine_destroy(t_engine *e);

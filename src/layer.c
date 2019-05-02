@@ -1,47 +1,40 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   sketch.c                                         .::    .:/ .      .::   */
+/*   layer.c                                          .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/04/27 18:14:50 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 21:51:04 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Created: 2019/04/23 17:04:49 by lloyet       #+#   ##    ##    #+#       */
+/*   Updated: 2019/05/02 02:12:06 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../inc/wolf.h"
 
-t_payload			*new_sketch()
+t_layer			*new_layer(t_image *img)
 {
-	return (new_payload())
-}
-}
+	t_layer		*layer;
 
-void				sketch_destroy(t_sketch *sketch)
-{
-	tree_destroy(&sketch->board, layer_destroy);
-	*sketch->marker = 0;
-	ft_memdel((void**)&sketch);
-	return ;
-}
-
-t_node				*new_layer(t_grid *grid)
-{
-	t_node			*layer;
-
-	if (!(layer = new_node((void *)grid)))
+	if (!(layer = (t_layer*)ft_memalloc(sizeof(t_layer))))
 		return (0);
-	grid_destroy(grid);
+	layer->img = img;
+	layer->scale = G_SCALE;
+	layer->cursor_coef = 1.0;
 	return (layer);
 }
 
-void				layer_destroy(void *grid)
+void			layer_destroy(t_layer *layer)
 {
-	t_grid			*grid_;
+	image_destroy(layer->img);
+	ft_memdel((void**)&layer);
+	return ;
+}
 
-	grid_ = (t_grid*)grid;
-	grid_destroy(grid_);
-	return (0);
+void			layer_draw(t_layer *layer)
+{
+	image_fill(layer->img, CLR_A);
+	image_pixel_put(layer->img, 300, 300, layer->color);
+	return ;
 }

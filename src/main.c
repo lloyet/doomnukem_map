@@ -6,29 +6,22 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/02/15 01:06:33 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 11:28:04 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/02 04:42:03 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../inc/wolf.h"
 
-static void				push_img_window(t_engine *e)
-{
-	mlx_put_image_to_window(e->mlx->id, e->mlx->win->id, e->mlx->win->bg->id, 0, 0);
-	mlx_put_image_to_window(e->mlx->id, e->mlx->win->id, (*e->sketch->marker)->grid->img->id, 0, 0);
-	return ;
-}
-
 static int				refresh_stack(t_engine *e)
 {
 	e->old.tv_sec = e->cur.tv_sec;
 	e->old.tv_usec = e->cur.tv_usec;
-	image_fill(e->mlx->win->bg, CLR_BG);
-	cycle_draw(&e->sketch->board, e->sketch->marker);
-	push_img_window(e);
+	//image_fill(e->mlx->win->bg, CLR_BG);
+	//cycle_draw(&e->sketch->board, e->sketch->marker);
+	loader_pull(e->loader);
 	debug_display(e);
-	image_clear(e->mlx->win->bg);
+	//image_clear(e->mlx->win->bg);
 	gettimeofday(&e->cur, NULL);
 	if (e->cur.tv_usec < e->old.tv_usec)
 		e->mlx->frame = (e->old.tv_usec - e->cur.tv_usec) / 1000000.0;

@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/22 17:52:25 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 09:49:25 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/02 04:36:36 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -22,7 +22,7 @@ static void			event_catch_mouse(t_engine *e)
 	{
 		k->reg_key &= k->reg_key ^ (1 << k->reg_id[MOUSE_SCROLL_UP]);
 		if (key_is_pressed(k, KEY_CTRL_LEFT))
-			cycle_insert(e->sketch->marker, new_cycle(new_grid(new_image(e->mlx->id, WIDTH, HEIGH)), E_CYCLE));
+			loader_next(e->loader);
 		else
 			ft_putstr("Zoom In\n");
 	}
@@ -30,7 +30,7 @@ static void			event_catch_mouse(t_engine *e)
 	{
 		k->reg_key &= k->reg_key ^ (1 << k->reg_id[MOUSE_SCROLL_DOWN]);
 		if (key_is_pressed(k, KEY_CTRL_LEFT))
-			cycle_delone(&e->sketch->board, e->sketch->marker);
+			loader_prev(e->loader);
 		else
 			ft_putstr("Zoom Out\n");
 	}
@@ -50,6 +50,15 @@ static void			event_catch_keyboard(t_engine *e)
 	k = e->keyboard;
 	if (key_is_pressed(k, KEY_SPACE))
 		ft_putstr("Space\n");
+	if (key_is_pressed(k, KEY_CTRL_LEFT))
+	{
+		if (key_is_pressed(k, KEY_PAD_ADD))
+			loader_add(e->loader, new_layer(new_image(e->mlx->id, WIDTH, HEIGH)));
+			//add_layer
+		else if (key_is_pressed(k, KEY_PAD_SUB))
+			loader_remove(e->loader);
+			//del_layer
+	}
 	return ;
 }
 

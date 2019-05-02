@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/13 20:37:34 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 21:45:44 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/02 04:25:13 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,7 +15,6 @@
 
 void				window_destroy(t_window *win)
 {
-	image_destroy(win->bg);
 	ft_memdel((void **)&win);
 	return ;
 }
@@ -28,9 +27,6 @@ t_window			*new_window(void *mlx_id, int width, int heigh, char *title)
 		return (0);
 	if (!(win->id = mlx_new_window(mlx_id, width, heigh, title)))
 		return (0);
-	if (!(win->bg = new_image(mlx_id, width, heigh)))
-		return (0);
-	image_attach(win->bg, win);
 	win->width = width;
 	win->heigh = heigh;
 	win->title = title;

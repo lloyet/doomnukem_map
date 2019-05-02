@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/13 20:07:01 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 21:49:19 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/02 04:46:09 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -38,6 +38,7 @@ void					engine_destroy(t_engine *e)
 t_engine				*new_engine(void)
 {
 	t_engine			*e;
+	t_image				*bg;
 
 	if (!(e = (t_engine *)ft_memalloc(sizeof(t_engine))))
 		return (0);
@@ -47,10 +48,12 @@ t_engine				*new_engine(void)
 		return (0);
 	if (!(e->mouse = new_mouse(e->keyboard)))
 		return (0);
-	if (!(e->sketch = new_sketch(e->mlx->id)))
+	if (!(bg = new_image(e->mlx->id, WIDTH, HEIGH)))
 		return (0);
-	if (!(e->loader = new_loader(e->mlx->win->bg)))
+	if (!(e->loader = new_loader(new_layer(bg))))
 		return (0);
+	image_attach(bg, e->mlx->win);
+	image_fill(bg, CLR_BG);
 	device_register_keys(e->keyboard);
 	return (e);
 }

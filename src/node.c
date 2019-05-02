@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/29 19:28:47 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 21:06:11 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/02 04:39:28 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -48,14 +48,14 @@ void			node_remove(t_node **iterator, void (*del)(void *))
 	return ;
 }
 
-void			node_iter(t_node **iterator, void (*f)(t_node *node))
+void			node_iter(t_node **iterator, void (*f)(void *content))
 {
 	t_node		*cur;
 
 	cur = *iterator;
 	while (cur)
 	{
-		(*f)(cur);
+		(*f)(cur->content);
 		cur = cur->child;
 		if (cur == *iterator)
 			break;

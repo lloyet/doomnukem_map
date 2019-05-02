@@ -26,19 +26,20 @@ LIBDIR = ./lib/
 SRC =	main.c \
 		misc.c \
 		engine.c \
-		grid.c \
+		layer.c \
 		draw.c \
 		loader.c \
+		loader_utils.c \
+		loader_it.c \
+		payload.c \
 		event.c \
 		framework.c \
 		device.c \
-		sketch.c \
 		hook_key.c \
 		hook_mouse.c \
 		image.c \
 		node.c \
-		vector.c \
-		angle.c
+		tree.c \
 
 OBJ	= $(addprefix $(OBJDIR), $(SRC:.c=.o))
 
