@@ -64,7 +64,7 @@ ifeq ($(shell uname), Darwin)
 endif
 
 .PHONY: all clean fclean re
-all: $(OBJDIR) $(LIBFT) $(LIBMLX) $(INC) $(NAME)
+all: $(OBJDIR) $(LIBFT) $(LIBMLX) $(NAME)
 
 $(NAME): $(OBJ)
 	@$(CC) $(OBJ) $(MLXLINK) $(LIBLINK) -lm -lpthread -o $(NAME)

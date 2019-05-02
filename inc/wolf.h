@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/16 19:44:01 by augberna     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/02 04:40:04 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/02 23:14:36 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -263,13 +263,14 @@ typedef struct		s_mouse
 typedef struct		s_node
 {
 	void			*content;
-	struct s_node	*parent;
-	struct s_node	*child;
+	struct s_node	**parent;
+	struct s_node	**child;
 }					t_node;
 
 typedef struct		s_payload
 {
-	size_t			n;
+	int				n;
+	int				index;
 	t_node			*buffer;
 	t_node			**iterator;
 	void 			(*destroy)(void *elem);
@@ -291,7 +292,7 @@ typedef struct		s_image
 typedef struct 		s_layer
 {
 	t_image			*img;
-	int				color;
+	int				pipet;
 	int				scale;
 	double			cursor_coef;
 }					t_layer;
@@ -347,6 +348,8 @@ void				payload_add(t_payload *p, t_node **iterator, void *content);
 void				payload_remove(t_payload *p, t_node **iterator);
 void				payload_iter(t_payload *p, void (*f)(void *content));
 int					payload_index(t_payload *p, t_node **iterator);
+void				payload_it_next(t_payload *p);
+void				payload_it_prev(t_payload *p);
 
 void				tree_destroy(t_node **anode, void (*del)(void *));
 int					tree_cycle_detector(t_node **tree);
@@ -379,7 +382,7 @@ void				framework_destroy(t_framework *framework);
 t_framework			*new_framework(void);
 
 void				image_destroy(t_image *img);
-t_image				*new_image(void *mlx_id, int width, int heigh);
+t_image				*new_image(void *mlx_id, void *win_id, int width, int heigh);
 void				image_attach(t_image *img, t_window *win);
 
 void				image_clear(t_image *img);

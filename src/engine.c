@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/13 20:07:01 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/02 04:46:09 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/02 18:38:55 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,6 +18,8 @@ static void				device_register_keys(t_keyboard *k)
 	register_new_key(k, KEY_ESCAPE);
 	register_new_key(k, KEY_SPACE);
 	register_new_key(k, KEY_DEL);
+	register_new_key(k, KEY_PAD_SUB);
+	register_new_key(k, KEY_PAD_ADD);
 	register_new_key(k, KEY_CTRL_LEFT);
 	register_new_key(k, MOUSE_LEFT);
 	register_new_key(k, MOUSE_RIGHT);
@@ -48,7 +50,7 @@ t_engine				*new_engine(void)
 		return (0);
 	if (!(e->mouse = new_mouse(e->keyboard)))
 		return (0);
-	if (!(bg = new_image(e->mlx->id, WIDTH, HEIGH)))
+	if (!(bg = new_image(e->mlx->id, e->mlx->win->id, WIDTH, HEIGH)))
 		return (0);
 	if (!(e->loader = new_loader(new_layer(bg))))
 		return (0);

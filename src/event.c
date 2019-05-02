@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/22 17:52:25 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/02 04:36:36 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/02 18:33:53 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -53,7 +53,7 @@ static void			event_catch_keyboard(t_engine *e)
 	if (key_is_pressed(k, KEY_CTRL_LEFT))
 	{
 		if (key_is_pressed(k, KEY_PAD_ADD))
-			loader_add(e->loader, new_layer(new_image(e->mlx->id, WIDTH, HEIGH)));
+			loader_add(e->loader, new_layer(new_image(e->mlx->id, e->mlx->win->id, WIDTH, HEIGH)));
 			//add_layer
 		else if (key_is_pressed(k, KEY_PAD_SUB))
 			loader_remove(e->loader);

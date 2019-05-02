@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/02/15 01:06:33 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/02 04:42:03 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/02 19:56:03 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -28,6 +28,7 @@ static int				refresh_stack(t_engine *e)
 	else
 		e->mlx->frame = (e->cur.tv_usec - e->old.tv_usec) / 1000000.0;
 	event_refresh(e);
+	printf("%d\n", payload_index(e->loader, e->loader->iterator));
 	//cycle_insert(e->marker, new_cycle(new_grid(new_image(e->mlx->id, WIDTH, HEIGH))));
 	//printf("sizeCycle = %d\n", cycle_len(&e->board));
 	return (0);

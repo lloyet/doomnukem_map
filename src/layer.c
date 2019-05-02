@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/23 17:04:49 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/02 02:12:06 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/02 18:41:52 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -19,9 +19,11 @@ t_layer			*new_layer(t_image *img)
 
 	if (!(layer = (t_layer*)ft_memalloc(sizeof(t_layer))))
 		return (0);
+	layer->pipet = CLR_LAYER;
 	layer->img = img;
 	layer->scale = G_SCALE;
 	layer->cursor_coef = 1.0;
+	image_fill(layer->img, CLR_A);
 	return (layer);
 }
 
@@ -34,7 +36,6 @@ void			layer_destroy(t_layer *layer)
 
 void			layer_draw(t_layer *layer)
 {
-	image_fill(layer->img, CLR_A);
-	image_pixel_put(layer->img, 300, 300, layer->color);
+	image_pixel_put(layer->img, 300, 300, layer->pipet);
 	return ;
 }
