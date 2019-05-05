@@ -6,12 +6,12 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/17 02:53:12 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/22 21:04:24 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/04 19:04:18 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../inc/wolf.h"
+#include "../inc/doom_map.h"
 
 uint8_t			key_is_pressed(t_keyboard *keyboard, int key)
 {

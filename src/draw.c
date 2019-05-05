@@ -6,12 +6,12 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/22 17:33:22 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/30 21:44:01 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/04 19:03:38 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../inc/wolf.h"
+#include "../inc/doom_map.h"
 
 void				image_clear(t_image *img)
 {

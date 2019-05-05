@@ -6,17 +6,16 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/13 20:07:01 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/02 18:38:55 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/05 03:34:45 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../inc/wolf.h"
+#include "../inc/doom_map.h"
 
 static void				device_register_keys(t_keyboard *k)
 {
 	register_new_key(k, KEY_ESCAPE);
-	register_new_key(k, KEY_SPACE);
 	register_new_key(k, KEY_DEL);
 	register_new_key(k, KEY_PAD_SUB);
 	register_new_key(k, KEY_PAD_ADD);
@@ -33,6 +32,7 @@ void					engine_destroy(t_engine *e)
 	framework_destroy(e->mlx);
 	keyboard_destroy(e->keyboard);
 	mouse_destroy(e->mouse);
+	gui_destroy(e->gui);
 	ft_memdel((void **)&e);
 	exit(1);
 }
@@ -52,9 +52,8 @@ t_engine				*new_engine(void)
 		return (0);
 	if (!(bg = new_image(e->mlx->id, e->mlx->win->id, WIDTH, HEIGH)))
 		return (0);
-	if (!(e->loader = new_loader(new_layer(bg))))
+	if (!(e->gui = new_gui(new_layer(bg))))
 		return (0);
-	image_attach(bg, e->mlx->win);
 	image_fill(bg, CLR_BG);
 	device_register_keys(e->keyboard);
 	return (e);

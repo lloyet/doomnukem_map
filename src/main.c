@@ -6,12 +6,12 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/02/15 01:06:33 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/02 19:56:03 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/05 03:36:47 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../inc/wolf.h"
+#include "../inc/doom_map.h"
 
 static int				refresh_stack(t_engine *e)
 {
@@ -19,7 +19,7 @@ static int				refresh_stack(t_engine *e)
 	e->old.tv_usec = e->cur.tv_usec;
 	//image_fill(e->mlx->win->bg, CLR_BG);
 	//cycle_draw(&e->sketch->board, e->sketch->marker);
-	loader_pull(e->loader);
+	gui_display(e->gui);
 	debug_display(e);
 	//image_clear(e->mlx->win->bg);
 	gettimeofday(&e->cur, NULL);
@@ -28,9 +28,7 @@ static int				refresh_stack(t_engine *e)
 	else
 		e->mlx->frame = (e->cur.tv_usec - e->old.tv_usec) / 1000000.0;
 	event_refresh(e);
-	printf("%d\n", payload_index(e->loader, e->loader->iterator));
-	//cycle_insert(e->marker, new_cycle(new_grid(new_image(e->mlx->id, WIDTH, HEIGH))));
-	//printf("sizeCycle = %d\n", cycle_len(&e->board));
+	//printf("size = %d\n", e->gui->loader->n);
 	return (0);
 }
 

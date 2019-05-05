@@ -6,12 +6,12 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/17 02:53:30 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/04/25 15:54:09 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/04 19:04:25 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../inc/wolf.h"
+#include "../inc/doom_map.h"
 
 int			mouse_motion_hook(int x, int y, t_mouse *mouse)
 {

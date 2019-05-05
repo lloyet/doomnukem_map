@@ -11,11 +11,11 @@
 #                                                         /                    #
 # **************************************************************************** #
 
-NAME = DOOM
+NAME = DOOM_MAP
 
 # COMPILER#
 CC	= clang
-CFLAGS = -Wall -Wextra -Werror -O3 -ggdb
+CFLAGS = -Wall -Wextra -Werror -ggdb
 
 # DIR
 SRCDIR = ./src/
@@ -26,18 +26,19 @@ LIBDIR = ./lib/
 SRC =	main.c \
 		misc.c \
 		engine.c \
+		image.c \
 		layer.c \
+		shape.c \
 		draw.c \
-		loader.c \
-		loader_utils.c \
-		loader_it.c \
-		payload.c \
-		event.c \
+		gui.c \
+		gui_utils.c \
 		framework.c \
 		device.c \
 		hook_key.c \
 		hook_mouse.c \
-		image.c \
+		event.c \
+		payload.c \
+		iterator.c\
 		node.c \
 		tree.c \
 

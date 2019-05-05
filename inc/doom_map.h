@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   wolf.h                                           .::    .:/ .      .::   */
+/*   doom_map.h                                       .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/16 19:44:01 by augberna     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/02 23:14:36 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/05 07:53:48 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#ifndef _WOLF_H
-# define _WOLF_H
+#ifndef _DOOM_MAP_H
+# define _DOOM_MAP_H
 
 # include "../lib/minilibx_macos/mlx.h"
 # include "../lib/libft/libft.h"
@@ -248,11 +248,6 @@ typedef struct		s_vertex
 	double			y;
 }					t_vertex;
 
-typedef struct		s_gui
-{
-	
-}					t_gui;
-
 typedef struct		s_mouse
 {
 	int				x;
@@ -263,18 +258,29 @@ typedef struct		s_mouse
 typedef struct		s_node
 {
 	void			*content;
-	struct s_node	**parent;
-	struct s_node	**child;
+	struct s_node	*parent;
+	struct s_node	*child;
 }					t_node;
 
 typedef struct		s_payload
 {
+	t_node			*begin;
+	void 			(*destroy)(void *elem);
 	int				n;
 	int				index;
-	t_node			*buffer;
-	t_node			**iterator;
-	void 			(*destroy)(void *elem);
 }					t_payload;
+
+typedef struct		s_gui
+{
+	t_node			*iterator;
+	t_payload		*layer;
+}					t_gui;
+
+typedef struct		s_shape
+{
+	t_node			*iterator;
+	t_payload		*vertex;
+}					t_shape;
 
 typedef struct		s_image
 {
@@ -292,6 +298,8 @@ typedef struct		s_image
 typedef struct 		s_layer
 {
 	t_image			*img;
+	t_shape			*tmp;
+	t_payload		*shape;
 	int				pipet;
 	int				scale;
 	double			cursor_coef;
@@ -316,7 +324,7 @@ typedef struct		s_framework
 typedef struct		s_engine
 {
 	t_framework		*mlx;
-	t_payload		*loader;
+	t_gui			*gui;
 	t_keyboard		*keyboard;
 	t_mouse			*mouse;
 	struct timeval	old;
@@ -344,33 +352,37 @@ void				event_refresh(t_engine *e);
 
 t_payload			*new_payload(void *content, void (*destroy)(void *elem));
 void				payload_destroy(t_payload *p);
-void				payload_add(t_payload *p, t_node **iterator, void *content);
+void				payload_add(t_payload *p, t_node *iterator, void *content);
 void				payload_remove(t_payload *p, t_node **iterator);
-void				payload_iter(t_payload *p, void (*f)(void *content));
-int					payload_index(t_payload *p, t_node **iterator);
-void				payload_it_next(t_payload *p);
-void				payload_it_prev(t_payload *p);
+int					payload_size(t_payload *p);
 
-void				tree_destroy(t_node **anode, void (*del)(void *));
+t_node				*new_iterator(t_payload *p);
+void				payload_next(t_payload *p, t_node **iterator);
+void				payload_prev(t_payload *p, t_node **iterator);
+void				payload_iter(t_payload *p, void (*f)(void *content));
+
+void				tree_destroy(t_node *tree, void (*del)(void *));
 int					tree_cycle_detector(t_node **tree);
 
 t_node				*new_node(void *content);
 void				node_destroy(t_node *node, void (*del)(void *));
-void				node_insert(t_node **iterator, t_node *new);
-void				node_remove(t_node **iterator, void (*del)(void *));
-void				node_iter(t_node **iterator, void (*f)(void *content));
+void				node_insert(t_node *iterator, t_node *new);
+void				node_remove(t_node *iterator, void (*del)(void *));
+void				node_iter(t_node *iterator, void (*f)(void *content));
 
-t_layer				*new_layer(t_image *img);
 void				layer_destroy(t_layer *layer);
+t_layer				*new_layer(t_image *img);
 void				layer_draw(t_layer *layer);
 
-t_payload			*new_loader(t_layer *layer);
-void				loader_add(t_payload *loader, t_layer *layer);
-void				loader_refresh(t_payload *loader);
-void				loader_remove(t_payload *loader);
-void				loader_pull(t_payload *loader);
-void				loader_prev(t_payload *loader);
-void				loader_next(t_payload *loader);
+void				gui_destroy(t_gui *gui);
+t_gui				*new_gui(t_layer *background);
+void				gui_add_layer(t_gui *gui, t_layer *layer);
+void				gui_refresh_layer(t_gui *gui);
+void				gui_remove_layer(t_gui *gui);
+
+void				gui_display(t_gui *gui);
+void				gui_prev(t_gui *gui);
+void				gui_next(t_gui *gui);
 
 t_engine			*new_engine(void);
 void				engine_destroy(t_engine *e);

@@ -5,15 +5,22 @@
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/04/23 17:04:49 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/02 18:41:52 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Created: 2019/05/04 19:57:51 by lloyet       #+#   ##    ##    #+#       */
+/*   Updated: 2019/05/04 20:05:48 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../inc/wolf.h"
+#include "../inc/doom_map.h"
 
-t_layer			*new_layer(t_image *img)
+void				layer_destroy(t_layer *layer)
+{
+	image_destroy(layer->img);
+	ft_memdel((void**)&layer);
+	return ;
+}
+
+t_layer				*new_layer(t_image *img)
 {
 	t_layer		*layer;
 
@@ -27,14 +34,7 @@ t_layer			*new_layer(t_image *img)
 	return (layer);
 }
 
-void			layer_destroy(t_layer *layer)
-{
-	image_destroy(layer->img);
-	ft_memdel((void**)&layer);
-	return ;
-}
-
-void			layer_draw(t_layer *layer)
+void				layer_draw(t_layer *layer)
 {
 	image_pixel_put(layer->img, 300, 300, layer->pipet);
 	return ;

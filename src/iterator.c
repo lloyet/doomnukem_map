@@ -1,30 +1,39 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   loader_it.c                                      .::    .:/ .      .::   */
+/*   iterator.c                                       .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/05/02 02:50:28 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/02 21:53:00 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Created: 2019/05/04 17:45:32 by lloyet       #+#   ##    ##    #+#       */
+/*   Updated: 2019/05/05 05:10:42 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../inc/wolf.h"
+#include "../inc/doom_map.h"
 
-void					loader_next(t_payload *loader)
+t_node				*new_iterator(t_payload *p)
 {
-	((t_layer*)((*loader->iterator)->content))->pipet = CLR_SHADOW;
-	payload_it_next(loader);
-	((t_layer*)((*loader->iterator)->content))->pipet = CLR_LAYER;
+	return (p->begin);
+}
+
+void				payload_next(t_payload *p, t_node **iterator)
+{
+	*iterator = (*iterator)->child;
+	p->index++;
 	return ;
 }
 
-void					loader_prev(t_payload *loader)
+void				payload_prev(t_payload *p, t_node **iterator)
 {
-	((t_layer*)((*loader->iterator)->content))->pipet = CLR_SHADOW;
-	payload_it_prev(loader);
-	((t_layer*)((*loader->iterator)->content))->pipet = CLR_LAYER;
+	*iterator = (*iterator)->parent;
+	p->index--;
+	return ;
+}
+
+void				payload_iter(t_payload *p, void (*f)(void *content))
+{
+	node_iter(p->begin, f);
 	return ;
 }
