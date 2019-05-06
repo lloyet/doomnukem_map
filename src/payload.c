@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/30 12:14:08 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/05 07:12:13 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/05 17:52:58 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -40,13 +40,11 @@ void				payload_add(t_payload *p, t_node *iterator, void *content)
 	return ;
 }
 
-void				payload_remove(t_payload *p, t_node **iterator)
+void				payload_remove(t_payload *p, t_node *iterator)
 {
-	t_node			*cur;
-
-	if ((cur = (*iterator)->child))
+	if (iterator->child)
 	{
-		node_remove(cur, p->destroy);
+		node_remove(iterator->child, p->destroy);
 		p->n -= (p->n - 1) > -1 ? 1 : 0;
 	}
 	return ;

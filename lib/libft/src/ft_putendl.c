@@ -1,34 +1,25 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   hook_key.c                                       .::    .:/ .      .::   */
+/*   ft_putendl.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/04/17 02:53:12 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/06 12:30:19 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Created: 2017/12/11 13:34:45 by lloyet       #+#   ##    ##    #+#       */
+/*   Updated: 2019/04/19 00:21:49 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../inc/doom_map.h"
+#include "libft.h"
 
-int				key_press_hook(int key, t_keyboard *keyboard)
+void			ft_putendl(const char *str)
 {
-	keyboard->reg_rise |= 1 << keyboard->reg_id[key];
-	keyboard->reg_key |= 1 << keyboard->reg_id[key];
-	return (0);
-}
+	const char	n = '\n';
+	const char	*str_ = str;
 
-int				key_release_hook(int key, t_keyboard *keyboard)
-{
-	keyboard->reg_fall |= 1 << keyboard->reg_id[key];
-	keyboard->reg_key ^= 1 << keyboard->reg_id[key];
-	return (0);
-}
-
-int				destroy_window_hook(t_engine *engine)
-{
-	engine_destroy(engine);
-	return (0);
+	while (*str_)
+		write(1, str_++, 1);
+	write(1, &n, 1);
+	return ;
 }

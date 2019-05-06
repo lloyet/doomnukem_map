@@ -28,7 +28,10 @@ SRC =	main.c \
 		engine.c \
 		image.c \
 		layer.c \
+		layer_utils.c \
 		shape.c \
+		shape_utils.c \
+		vertex.c \
 		draw.c \
 		gui.c \
 		gui_utils.c \
@@ -36,6 +39,7 @@ SRC =	main.c \
 		device.c \
 		hook_key.c \
 		hook_mouse.c \
+		hook_handle.c \
 		event.c \
 		payload.c \
 		iterator.c\

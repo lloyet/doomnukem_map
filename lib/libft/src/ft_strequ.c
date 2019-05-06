@@ -1,34 +1,22 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   hook_key.c                                       .::    .:/ .      .::   */
+/*   ft_strequ.c                                      .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/04/17 02:53:12 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/06 12:30:19 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Created: 2017/12/11 16:34:24 by lloyet       #+#   ##    ##    #+#       */
+/*   Updated: 2019/04/19 00:25:46 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../inc/doom_map.h"
+#include "libft.h"
 
-int				key_press_hook(int key, t_keyboard *keyboard)
+int		ft_strequ(char const *s1, char const *s2)
 {
-	keyboard->reg_rise |= 1 << keyboard->reg_id[key];
-	keyboard->reg_key |= 1 << keyboard->reg_id[key];
-	return (0);
-}
-
-int				key_release_hook(int key, t_keyboard *keyboard)
-{
-	keyboard->reg_fall |= 1 << keyboard->reg_id[key];
-	keyboard->reg_key ^= 1 << keyboard->reg_id[key];
-	return (0);
-}
-
-int				destroy_window_hook(t_engine *engine)
-{
-	engine_destroy(engine);
-	return (0);
+	if (!ft_strcmp(s1, s2))
+		return (1);
+	else
+		return (0);
 }

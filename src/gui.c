@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/23 17:04:49 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/05 07:35:36 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/06 14:07:18 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -45,16 +45,6 @@ void				gui_add_layer(t_gui *gui, t_layer *layer)
 
 void				gui_remove_layer(t_gui *gui)
 {
-	payload_remove(gui->layer, &gui->iterator);
-	return ;
-}
-
-void				gui_refresh_layer(t_gui *gui)
-{
-	t_layer			*layer;
-
-	layer = (t_layer*)gui->iterator->content;
-	image_clear(layer->img);
-	layer_draw(layer);
+	payload_remove(gui->layer, gui->iterator);
 	return ;
 }

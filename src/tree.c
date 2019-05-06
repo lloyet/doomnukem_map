@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/30 11:48:10 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/05 05:10:36 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/06 19:47:46 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -23,18 +23,19 @@ void			tree_destroy(t_node *tree, void (*del)(void *))
 	return ;
 }
 
-/*int				tree_cycle_detector(t_node **tree)
+int				cycle_detector(t_node *begin)
 {
-	t_node		*anchor;
-	t_node		*cur;
+	t_node		*slow;
+	t_node		*fast;
 
-	anchor = *tree;
-	cur = *tree;
-	while (cur)
+	slow = begin;
+	fast = begin;
+	while (fast && fast->child)
 	{
-		cur = cur->child;
-		if (anchor == cur)
+		slow = slow->child;
+		fast = fast->child->child;
+		if (fast == slow)
 			return (1);
 	}
 	return (0);
-}*/
+}

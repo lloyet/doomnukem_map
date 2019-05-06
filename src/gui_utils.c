@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/02 02:39:27 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/05 07:35:53 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/06 23:51:49 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -24,7 +24,16 @@ static void			gui_display_layer(void *content)
 
 void				gui_display(t_gui *gui)
 {
-	payload_iter(gui->layer, &gui_display_layer);
+	t_layer			*layer;
+
+	layer = (t_layer*)gui->iterator->content;
+	gui_display_layer(gui->layer->begin->content);
+	if (gui->iterator != gui->layer->begin)
+	{
+		if (layer->s_tmp)
+			shape_draw(layer->s_tmp, layer->img, layer->pipet);
+		gui_display_layer(gui->iterator->content);
+	}
 	return ;
 }
 

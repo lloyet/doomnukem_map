@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/02/15 01:06:33 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/05 03:36:47 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/06 22:43:06 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -17,17 +17,15 @@ static int				refresh_stack(t_engine *e)
 {
 	e->old.tv_sec = e->cur.tv_sec;
 	e->old.tv_usec = e->cur.tv_usec;
-	//image_fill(e->mlx->win->bg, CLR_BG);
-	//cycle_draw(&e->sketch->board, e->sketch->marker);
 	gui_display(e->gui);
 	debug_display(e);
-	//image_clear(e->mlx->win->bg);
-	gettimeofday(&e->cur, NULL);
+	gettimeofday(&e->cur, 0);
 	if (e->cur.tv_usec < e->old.tv_usec)
 		e->mlx->frame = (e->old.tv_usec - e->cur.tv_usec) / 1000000.0;
 	else
 		e->mlx->frame = (e->cur.tv_usec - e->old.tv_usec) / 1000000.0;
 	event_refresh(e);
+	//printf("cur = %llu\n", e->keyboard->reg_key);
 	//printf("size = %d\n", e->gui->loader->n);
 	return (0);
 }

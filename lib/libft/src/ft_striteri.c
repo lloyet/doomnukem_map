@@ -1,34 +1,24 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   hook_key.c                                       .::    .:/ .      .::   */
+/*   ft_striteri.c                                    .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/04/17 02:53:12 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/06 12:30:19 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Created: 2017/12/11 14:59:13 by lloyet       #+#   ##    ##    #+#       */
+/*   Updated: 2019/04/19 00:29:09 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../inc/doom_map.h"
+#include "libft.h"
 
-int				key_press_hook(int key, t_keyboard *keyboard)
+void				ft_striteri(char *str, void (*f)(unsigned int, char *))
 {
-	keyboard->reg_rise |= 1 << keyboard->reg_id[key];
-	keyboard->reg_key |= 1 << keyboard->reg_id[key];
-	return (0);
-}
+	unsigned int	index;
 
-int				key_release_hook(int key, t_keyboard *keyboard)
-{
-	keyboard->reg_fall |= 1 << keyboard->reg_id[key];
-	keyboard->reg_key ^= 1 << keyboard->reg_id[key];
-	return (0);
-}
-
-int				destroy_window_hook(t_engine *engine)
-{
-	engine_destroy(engine);
-	return (0);
+	index = 0;
+	while (*str)
+		f(index++, str++);
+	return ;
 }

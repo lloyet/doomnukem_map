@@ -1,34 +1,43 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   hook_key.c                                       .::    .:/ .      .::   */
+/*   ft_strsplit.c                                    .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/04/17 02:53:12 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/06 12:30:19 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Created: 2017/12/17 17:39:56 by lloyet       #+#   ##    ##    #+#       */
+/*   Updated: 2019/04/19 00:33:06 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../inc/doom_map.h"
+#include "libft.h"
 
-int				key_press_hook(int key, t_keyboard *keyboard)
+char	**ft_strsplit(char const *s, char c)
 {
-	keyboard->reg_rise |= 1 << keyboard->reg_id[key];
-	keyboard->reg_key |= 1 << keyboard->reg_id[key];
-	return (0);
-}
+	size_t	k;
+	size_t	j;
+	size_t	i;
+	char	**ret;
 
-int				key_release_hook(int key, t_keyboard *keyboard)
-{
-	keyboard->reg_fall |= 1 << keyboard->reg_id[key];
-	keyboard->reg_key ^= 1 << keyboard->reg_id[key];
-	return (0);
-}
-
-int				destroy_window_hook(t_engine *engine)
-{
-	engine_destroy(engine);
-	return (0);
+	i = 0;
+	j = 0;
+	if (!s || !c || !(ret = (char **)ft_memalloc(sizeof(char *) *
+		(ft_strlen(s) + 1))))
+		return (0);
+	while (s[i] != '\0')
+	{
+		if (s[i] == c)
+			i++;
+		else
+		{
+			k = 0;
+			while (s[i + k] != '\0' && s[i + k] != c)
+				k++;
+			ret[j++] = ft_strsub(s, i, k);
+			i += k;
+		}
+	}
+	ret[j] = 0;
+	return (ret);
 }

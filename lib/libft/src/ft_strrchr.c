@@ -1,34 +1,29 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   hook_key.c                                       .::    .:/ .      .::   */
+/*   ft_strrchr.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/04/17 02:53:12 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/06 12:30:19 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Created: 2018/01/26 19:23:50 by lloyet       #+#   ##    ##    #+#       */
+/*   Updated: 2019/04/19 00:32:56 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../inc/doom_map.h"
+#include "libft.h"
 
-int				key_press_hook(int key, t_keyboard *keyboard)
+char	*ft_strrchr(const char *s, int c)
 {
-	keyboard->reg_rise |= 1 << keyboard->reg_id[key];
-	keyboard->reg_key |= 1 << keyboard->reg_id[key];
-	return (0);
-}
+	size_t	n;
+	char	*s_;
 
-int				key_release_hook(int key, t_keyboard *keyboard)
-{
-	keyboard->reg_fall |= 1 << keyboard->reg_id[key];
-	keyboard->reg_key ^= 1 << keyboard->reg_id[key];
-	return (0);
-}
-
-int				destroy_window_hook(t_engine *engine)
-{
-	engine_destroy(engine);
+	n = ft_strlen(s);
+	s_ = (char *)&s[n];
+	while (s_ != s)
+		if (*s_-- == (char)c)
+			return ((char *)++s_);
+	if (*s_ == (char)c)
+		return ((char *)s_);
 	return (0);
 }

@@ -1,34 +1,36 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   hook_key.c                                       .::    .:/ .      .::   */
+/*   ft_strnstr.c                                     .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/04/17 02:53:12 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/06 12:30:19 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Created: 2018/01/26 21:11:46 by lloyet       #+#   ##    ##    #+#       */
+/*   Updated: 2019/04/19 00:32:51 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../inc/doom_map.h"
+#include "libft.h"
 
-int				key_press_hook(int key, t_keyboard *keyboard)
+char	*ft_strnstr(const char *haystack, const char *needle, size_t n)
 {
-	keyboard->reg_rise |= 1 << keyboard->reg_id[key];
-	keyboard->reg_key |= 1 << keyboard->reg_id[key];
-	return (0);
-}
+	size_t	i;
+	size_t	j;
 
-int				key_release_hook(int key, t_keyboard *keyboard)
-{
-	keyboard->reg_fall |= 1 << keyboard->reg_id[key];
-	keyboard->reg_key ^= 1 << keyboard->reg_id[key];
-	return (0);
-}
-
-int				destroy_window_hook(t_engine *engine)
-{
-	engine_destroy(engine);
+	if (!ft_strlen(needle))
+		return ((char *)haystack);
+	if (!ft_strlen(haystack))
+		return (0);
+	i = 0;
+	j = 0;
+	while (haystack[i])
+	{
+		while (haystack[i + j] == needle[j] && (i + j) < n)
+			if (!needle[j++ + 1])
+				return ((char *)&haystack[i]);
+		j = 0;
+		i++;
+	}
 	return (0);
 }

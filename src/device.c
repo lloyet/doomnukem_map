@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/28 20:17:08 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/04 19:03:30 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/06 12:31:43 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -45,11 +45,4 @@ t_keyboard			*new_keyboard(int size)
 	if (!(keyboard->reg_id = (uint8_t *)ft_memalloc(sizeof(uint8_t) * size)))
 		return (0);
 	return (keyboard);
-}
-
-void				register_new_key(t_keyboard *keyboard, int key)
-{
-	if (keyboard->reg_size < REG_KMASK_MAX)
-		keyboard->reg_id[key] = ++keyboard->reg_size;
-	return ;
 }

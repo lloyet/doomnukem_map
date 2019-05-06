@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/16 19:44:01 by augberna     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/05 07:53:48 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/06 23:03:53 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,7 +15,7 @@
 # define _DOOM_MAP_H
 
 # include "../lib/minilibx_macos/mlx.h"
-# include "../lib/libft/libft.h"
+# include "../lib/libft/inc/libft.h"
 # include <stdint.h>
 # include <math.h>
 # include <stdio.h>
@@ -36,6 +36,7 @@
 # define CLR_SHADOW					0x006C71C4
 # define CLR_VAR					0x00D33682
 # define CLR_STR					0x002AA198
+# define CLR_VERTEX					0x00A0E502
 
 # define WIDTH						1920
 # define WIDTH_2					WIDTH*0.5
@@ -238,14 +239,16 @@
 typedef struct		s_keyboard
 {
 	uint64_t		reg_key;
+	uint64_t		reg_fall;
+	uint64_t		reg_rise;
 	int				reg_size;
 	uint8_t			*reg_id;
 }					t_keyboard;
 
 typedef struct		s_vertex
 {
-	double			x;
-	double			y;
+	int				x;
+	int				y;
 }					t_vertex;
 
 typedef struct		s_mouse
@@ -298,8 +301,11 @@ typedef struct		s_image
 typedef struct 		s_layer
 {
 	t_image			*img;
-	t_shape			*tmp;
+	t_shape			*s_tmp;
+	t_vertex		*v_tmp;
+	t_node			*iterator;
 	t_payload		*shape;
+	int				is_draw;
 	int				pipet;
 	int				scale;
 	double			cursor_coef;
@@ -335,7 +341,11 @@ int					mouse_motion_hook(int x, int y, t_mouse *mouse);
 int					mouse_press_hook(int key, int x, int y, t_mouse *mouse);
 int					mouse_release_hook(int key, int x, int y, t_mouse *mouse);
 
-uint8_t				key_is_pressed(t_keyboard *keyboard, int key);
+void				register_new_key(t_keyboard *keyboard, int key);
+int					key_is_pressed(t_keyboard *keyboard, int key);
+int					key_is_rising(t_keyboard *k, int key);
+int					key_is_falling(t_keyboard *k, int key);
+
 int					key_press_hook(int key, t_keyboard *keyboard);
 int					key_release_hook(int key, t_keyboard *keyboard);
 int					destroy_window_hook(t_engine *engine);
@@ -344,7 +354,6 @@ void				mouse_destroy(t_mouse *mouse);
 t_mouse				*new_mouse(t_keyboard *keyboard);
 void				keyboard_destroy(t_keyboard *keyboard);
 t_keyboard			*new_keyboard(int size);
-void				register_new_key(t_keyboard *keyboard, int key);
 
 void				debug_display(t_engine *e);
 
@@ -353,7 +362,7 @@ void				event_refresh(t_engine *e);
 t_payload			*new_payload(void *content, void (*destroy)(void *elem));
 void				payload_destroy(t_payload *p);
 void				payload_add(t_payload *p, t_node *iterator, void *content);
-void				payload_remove(t_payload *p, t_node **iterator);
+void				payload_remove(t_payload *p, t_node *iterator);
 int					payload_size(t_payload *p);
 
 t_node				*new_iterator(t_payload *p);
@@ -362,7 +371,7 @@ void				payload_prev(t_payload *p, t_node **iterator);
 void				payload_iter(t_payload *p, void (*f)(void *content));
 
 void				tree_destroy(t_node *tree, void (*del)(void *));
-int					tree_cycle_detector(t_node **tree);
+int					cycle_detector(t_node *begin);
 
 t_node				*new_node(void *content);
 void				node_destroy(t_node *node, void (*del)(void *));
@@ -371,18 +380,34 @@ void				node_remove(t_node *iterator, void (*del)(void *));
 void				node_iter(t_node *iterator, void (*f)(void *content));
 
 void				layer_destroy(t_layer *layer);
-t_layer				*new_layer(t_image *img);
-void				layer_draw(t_layer *layer);
+t_layer				*new_layer(t_image *img, int is_draw);
+void				layer_init(t_layer *l, t_vertex *v);
+
+void				layer_refresh(t_layer *layer);
+t_vertex			*layer_has_vertex(t_layer *layer, t_vertex *v);
+void				layer_add(t_layer *l, t_shape *s);
 
 void				gui_destroy(t_gui *gui);
 t_gui				*new_gui(t_layer *background);
 void				gui_add_layer(t_gui *gui, t_layer *layer);
-void				gui_refresh_layer(t_gui *gui);
 void				gui_remove_layer(t_gui *gui);
 
 void				gui_display(t_gui *gui);
 void				gui_prev(t_gui *gui);
 void				gui_next(t_gui *gui);
+
+t_shape				*new_shape(t_vertex *vertex);
+void				shape_destroy(t_shape *shape);
+
+t_vertex			*shape_has_vertex(t_shape *s, t_vertex *v);
+void				shape_add(t_shape *s, t_vertex *v);
+void				shape_remove(t_shape *s);
+void				shape_draw(t_shape *shape, t_image *img, int pipet);
+
+t_vertex			*new_vertex(int x, int y);
+void				vertex_destroy(t_vertex *v);
+void				vertex_update(t_vertex *v, int x, int y);
+void				vertex_draw(t_image *img, t_vertex *v, int pipet);
 
 t_engine			*new_engine(void);
 void				engine_destroy(t_engine *e);
@@ -400,5 +425,6 @@ void				image_attach(t_image *img, t_window *win);
 void				image_clear(t_image *img);
 void				image_pixel_put(t_image *img, int x, int y, int color);
 void				image_fill(t_image *img, int color);
+void				image_line(t_image *img, t_vertex *v1, t_vertex *v2, int c);
 
 #endif
