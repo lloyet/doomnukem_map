@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/02 02:39:27 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/06 23:51:49 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 21:36:23 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,7 +18,8 @@ static void			gui_display_layer(void *content)
 	t_layer			*layer;
 
 	layer = (t_layer*)content;
-	mlx_put_image_to_window(layer->img->mlx_id, layer->img->win_id, layer->img->id, 0, 0);
+	mlx_put_image_to_window(layer->img->mlx_id,
+		layer->img->win_id, layer->img->id, 0, 0);
 	return ;
 }
 
@@ -30,8 +31,12 @@ void				gui_display(t_gui *gui)
 	gui_display_layer(gui->layer->begin->content);
 	if (gui->iterator != gui->layer->begin)
 	{
-		if (layer->s_tmp)
-			shape_draw(layer->s_tmp, layer->img, layer->pipet);
+		layer_draw((t_layer*)gui->iterator->content);
+		if (gui->iterator->parent && gui->iterator->parent != gui->layer->begin)
+		{
+			layer_draw((t_layer*)gui->iterator->parent->content);
+			gui_display_layer(gui->iterator->parent->content);
+		}
 		gui_display_layer(gui->iterator->content);
 	}
 	return ;

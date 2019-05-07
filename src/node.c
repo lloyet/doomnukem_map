@@ -6,22 +6,12 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/29 19:28:47 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/05 05:11:00 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 21:33:40 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../inc/doom_map.h"
-
-/*static void		node_addr_print(t_node *node, char *str)
-{
-
-	printf("%s = %p\n", str, node);
-	printf("%s->content = %p\n", str, node->content);
-	printf("%s->parent = %p\n", str, node->parent);
-	printf("%s->child = %p\n\n", str, node->child);
-	return ;
-}*/
 
 t_node			*new_node(void *content)
 {

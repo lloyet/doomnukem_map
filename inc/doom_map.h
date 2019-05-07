@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/16 19:44:01 by augberna     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/06 23:03:53 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 00:08:45 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -32,6 +32,7 @@
 # define CLR_A						0xFF000000
 
 # define CLR_BG						0x00002B36
+# define CLR_BG_S					0x00001E26
 # define CLR_LAYER					0x00CB4B16
 # define CLR_SHADOW					0x006C71C4
 # define CLR_VAR					0x00D33682
@@ -267,10 +268,10 @@ typedef struct		s_node
 
 typedef struct		s_payload
 {
-	t_node			*begin;
-	void 			(*destroy)(void *elem);
 	int				n;
 	int				index;
+	t_node			*begin;
+	void 			(*destroy)(void *elem);
 }					t_payload;
 
 typedef struct		s_gui
@@ -281,6 +282,8 @@ typedef struct		s_gui
 
 typedef struct		s_shape
 {
+	int				floor;
+	int				ceil;
 	t_node			*iterator;
 	t_payload		*vertex;
 }					t_shape;
@@ -305,6 +308,7 @@ typedef struct 		s_layer
 	t_vertex		*v_tmp;
 	t_node			*iterator;
 	t_payload		*shape;
+	int				mode;
 	int				is_draw;
 	int				pipet;
 	int				scale;
@@ -358,11 +362,13 @@ t_keyboard			*new_keyboard(int size);
 void				debug_display(t_engine *e);
 
 void				event_refresh(t_engine *e);
+void				event_draw_tmp(t_layer *l, int x, int y);
+void				event_delete_tmp(t_layer *l);
 
 t_payload			*new_payload(void *content, void (*destroy)(void *elem));
 void				payload_destroy(t_payload *p);
 void				payload_add(t_payload *p, t_node *iterator, void *content);
-void				payload_remove(t_payload *p, t_node *iterator);
+void				payload_remove(t_payload *p, t_node **iterator);
 int					payload_size(t_payload *p);
 
 t_node				*new_iterator(t_payload *p);
@@ -383,7 +389,7 @@ void				layer_destroy(t_layer *layer);
 t_layer				*new_layer(t_image *img, int is_draw);
 void				layer_init(t_layer *l, t_vertex *v);
 
-void				layer_refresh(t_layer *layer);
+void				layer_draw(t_layer *layer);
 t_vertex			*layer_has_vertex(t_layer *layer, t_vertex *v);
 void				layer_add(t_layer *l, t_shape *s);
 
@@ -425,6 +431,7 @@ void				image_attach(t_image *img, t_window *win);
 void				image_clear(t_image *img);
 void				image_pixel_put(t_image *img, int x, int y, int color);
 void				image_fill(t_image *img, int color);
-void				image_line(t_image *img, t_vertex *v1, t_vertex *v2, int c);
+void				image_square(t_image *img, t_vertex *v, int color);
 
+void				image_line(t_image *img, t_vertex *v1, t_vertex *v2, int c);
 #endif

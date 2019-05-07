@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/04 19:57:51 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/06 17:23:10 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 19:37:19 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -21,6 +21,12 @@ static void			layer_destroy_shape(void *content)
 
 void				layer_destroy(t_layer *layer)
 {
+	if (layer->s_tmp)
+		shape_destroy(layer->s_tmp);
+	if (layer->v_tmp)
+		vertex_destroy(layer->v_tmp);
+	if (layer->shape)
+		tree_destroy(layer->shape->begin, layer->shape->destroy);
 	image_destroy(layer->img);
 	ft_memdel((void**)&layer);
 	return ;
@@ -36,6 +42,7 @@ t_layer				*new_layer(t_image *img, int is_draw)
 	layer->is_draw = is_draw;
 	layer->pipet = CLR_LAYER;
 	layer->scale = G_SCALE;
+	layer->mode = is_draw;
 	layer->cursor_coef = 1.0;
 	image_fill(layer->img, CLR_A);
 	return (layer);

@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/06 15:36:06 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/06 23:51:16 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 21:32:53 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,11 +18,14 @@ void				shape_draw(t_shape *shape, t_image *img, int pipet)
 	t_node			*cur;
 
 	cur = shape->vertex->begin;
+	vertex_draw(img, (t_vertex*)cur->content, CLR_STR);
+	cur = cur->child;
 	while (cur)
 	{
-		vertex_draw(img, (t_vertex*)cur->content, CLR_VERTEX);
 		if (cur->parent)
-			image_line(img, (t_vertex*)cur->content, (t_vertex*)cur->parent->content, pipet);
+			image_line(img, (t_vertex*)cur->content,
+			(t_vertex*)cur->parent->content, pipet);
+		vertex_draw(img, (t_vertex*)cur->content, CLR_VERTEX);
 		cur = cur->child;
 	}
 	return ;
@@ -37,7 +40,7 @@ void				shape_add(t_shape *s, t_vertex *v)
 
 void				shape_remove(t_shape *s)
 {
-	payload_remove(s->vertex, s->iterator);
+	payload_remove(s->vertex, &s->iterator);
 	return ;
 }
 

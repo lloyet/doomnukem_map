@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/13 20:38:20 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/04 19:04:32 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 21:36:10 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -32,7 +32,8 @@ t_image				*new_image(void *mlx_id, void *win_id, int width, int heigh)
 	img->win_id = win_id;
 	img->width = width;
 	img->heigh = heigh;
-	img->data = mlx_get_data_addr(img->id, &img->bpp, &img->size_l, &img->endian);
+	img->data = mlx_get_data_addr(img->id, &img->bpp,
+		&img->size_l, &img->endian);
 	img->bpp /= 8;
 	return (img);
 }

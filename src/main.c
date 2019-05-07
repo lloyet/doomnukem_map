@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/02/15 01:06:33 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/06 22:43:06 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 19:08:35 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -25,8 +25,6 @@ static int				refresh_stack(t_engine *e)
 	else
 		e->mlx->frame = (e->cur.tv_usec - e->old.tv_usec) / 1000000.0;
 	event_refresh(e);
-	//printf("cur = %llu\n", e->keyboard->reg_key);
-	//printf("size = %d\n", e->gui->loader->n);
 	return (0);
 }
 

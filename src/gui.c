@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/23 17:04:49 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/06 14:07:18 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/07 21:44:02 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -40,11 +40,15 @@ t_gui				*new_gui(t_layer *background)
 void				gui_add_layer(t_gui *gui, t_layer *layer)
 {
 	payload_add(gui->layer, gui->iterator, (void*)layer);
+	gui_next(gui);
 	return ;
 }
 
 void				gui_remove_layer(t_gui *gui)
 {
-	payload_remove(gui->layer, gui->iterator);
+	payload_remove(gui->layer, &gui->iterator);
+	((t_layer*)(gui->iterator->content))->pipet = CLR_LAYER;
+	if (gui->iterator->parent)
+		((t_layer*)(gui->iterator->parent->content))->pipet = CLR_SHADOW;
 	return ;
 }

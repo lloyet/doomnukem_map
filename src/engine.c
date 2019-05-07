@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/13 20:07:01 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 00:02:03 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 00:08:59 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,6 +26,8 @@ static void				device_register_keys(t_keyboard *k)
 	register_new_key(k, MOUSE_SCROLL_DOWN);
 	register_new_key(k, MOUSE_SCROLL_UP);
 	register_new_key(k, KEY_DEL);
+	register_new_key(k, KEY_C);
+	register_new_key(k, KEY_F);
 }
 
 void					engine_destroy(t_engine *e)
@@ -42,7 +44,10 @@ t_engine				*new_engine(void)
 {
 	t_engine			*e;
 	t_image				*bg;
+	t_vertex			v;
 
+	v.x  = 0;
+	v.y = 0;
 	if (!(e = (t_engine *)ft_memalloc(sizeof(t_engine))))
 		return (0);
 	if (!(e->mlx = new_framework()))
@@ -56,6 +61,7 @@ t_engine				*new_engine(void)
 	if (!(e->gui = new_gui(new_layer(bg, 0))))
 		return (0);
 	image_fill(bg, CLR_BG);
+	image_square(bg, &v, CLR_BG_S);
 	device_register_keys(e->keyboard);
 	return (e);
 }
