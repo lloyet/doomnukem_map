@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/06 12:24:02 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 21:31:15 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 23:04:54 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -16,6 +16,12 @@
 void				vertex_destroy(t_vertex *v)
 {
 	ft_memdel((void**)&v);
+	return ;
+}
+
+void				vertex_destroy_elem(void *content)
+{
+	vertex_destroy((t_vertex*)content);
 	return ;
 }
 

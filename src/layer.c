@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/04 19:57:51 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 19:37:19 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 23:07:01 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -26,31 +26,38 @@ void				layer_destroy(t_layer *layer)
 	if (layer->v_tmp)
 		vertex_destroy(layer->v_tmp);
 	if (layer->shape)
-		tree_destroy(layer->shape->begin, layer->shape->destroy);
+		payload_destroy(layer->shape);
+	vertex_destroy(layer->spawn);
 	image_destroy(layer->img);
 	ft_memdel((void**)&layer);
 	return ;
 }
 
-t_layer				*new_layer(t_image *img, int is_draw)
+t_layer				*new_layer(t_image *img, e_mode m)
 {
 	t_layer		*layer;
 
 	if (!(layer = (t_layer*)ft_memalloc(sizeof(t_layer))))
 		return (0);
+	layer->spawn = new_vertex(-1, -1);
 	layer->img = img;
-	layer->is_draw = is_draw;
 	layer->pipet = CLR_LAYER;
 	layer->scale = G_SCALE;
-	layer->mode = is_draw;
-	layer->cursor_coef = 1.0;
+	layer->mode = m;
 	image_fill(layer->img, CLR_A);
 	return (layer);
 }
 
-void				layer_init(t_layer *l, t_vertex *v)
+void				layer_init(t_layer *l, t_shape *s)
 {
-	l->shape = new_payload((void*)new_shape(v), &layer_destroy_shape);
-	l->iterator = new_iterator(l->shape);
+	l->shape = new_payload((void*)s, &layer_destroy_shape);
+	l->it_shape = new_iterator(l->shape);
+	return ;
+}
+
+void				layer_entity(t_layer *l, t_vertex *e)
+{
+	payload_add(l->entity, l->it_entity, (void*)e);
+	payload_next(l->entity, &l->it_entity);
 	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/16 19:44:01 by augberna     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 00:08:45 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 23:11:59 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -45,6 +45,8 @@
 # define HEIGH_2					HEIGH*0.5
 
 # define G_SCALE					10
+# define V_BOX						11
+# define O_SKETCH					200
 
 # define M_DEG						180.0/M_PI
 # define M_RAD						M_PI/180.0
@@ -237,6 +239,19 @@
 # define COLORMAPCHANGEMASK			(1L<<23)
 # define OWNERGRABBUTTONMASK		(1L<<24)
 
+typedef enum
+{
+	L_EDIT = 1,
+	L_VISUAL = 0,
+	L_NO_DRAW = -1
+}					e_mode;
+
+typedef enum
+{
+	P_PLAYER = 1,
+	P_ENTITY = 2
+}					e_pipet;
+
 typedef struct		s_keyboard
 {
 	uint64_t		reg_key;
@@ -276,6 +291,7 @@ typedef struct		s_payload
 
 typedef struct		s_gui
 {
+	e_pipet			pipet;
 	t_node			*iterator;
 	t_payload		*layer;
 }					t_gui;
@@ -304,15 +320,16 @@ typedef struct		s_image
 typedef struct 		s_layer
 {
 	t_image			*img;
-	t_shape			*s_tmp;
+	t_vertex		*spawn;
 	t_vertex		*v_tmp;
-	t_node			*iterator;
+	t_shape			*s_tmp;
+	t_node			*it_shape;
 	t_payload		*shape;
-	int				mode;
-	int				is_draw;
+	t_node			*it_entity;
+	t_payload		*entity;
+	e_mode			mode;
 	int				pipet;
 	int				scale;
-	double			cursor_coef;
 }					t_layer;
 
 typedef struct		s_window
@@ -362,8 +379,10 @@ t_keyboard			*new_keyboard(int size);
 void				debug_display(t_engine *e);
 
 void				event_refresh(t_engine *e);
-void				event_draw_tmp(t_layer *l, int x, int y);
-void				event_delete_tmp(t_layer *l);
+void				event_visual(t_mouse *m, t_keyboard *k, t_layer *l);
+void				event_gui_manage(t_framework *mlx, t_keyboard *k, t_gui *g);
+void				event_gui_mode(t_keyboard *k, t_layer *l);
+void				event_pipet(t_layer *l, e_pipet e, int x, int y);
 
 t_payload			*new_payload(void *content, void (*destroy)(void *elem));
 void				payload_destroy(t_payload *p);
@@ -386,11 +405,12 @@ void				node_remove(t_node *iterator, void (*del)(void *));
 void				node_iter(t_node *iterator, void (*f)(void *content));
 
 void				layer_destroy(t_layer *layer);
-t_layer				*new_layer(t_image *img, int is_draw);
-void				layer_init(t_layer *l, t_vertex *v);
+t_layer				*new_layer(t_image *img, e_mode m);
+void				layer_entity(t_layer *l, t_vertex *e);
+void				layer_init(t_layer *l, t_shape *s);
 
 void				layer_draw(t_layer *layer);
-t_vertex			*layer_has_vertex(t_layer *layer, t_vertex *v);
+t_shape				*layer_has_vertex(t_layer *layer, int x, int y);
 void				layer_add(t_layer *l, t_shape *s);
 
 void				gui_destroy(t_gui *gui);
@@ -405,13 +425,14 @@ void				gui_next(t_gui *gui);
 t_shape				*new_shape(t_vertex *vertex);
 void				shape_destroy(t_shape *shape);
 
-t_vertex			*shape_has_vertex(t_shape *s, t_vertex *v);
+t_vertex			*shape_has_vertex(t_shape *s, int x, int y);
 void				shape_add(t_shape *s, t_vertex *v);
 void				shape_remove(t_shape *s);
 void				shape_draw(t_shape *shape, t_image *img, int pipet);
 
 t_vertex			*new_vertex(int x, int y);
 void				vertex_destroy(t_vertex *v);
+void				vertex_destroy_elem(void *content);
 void				vertex_update(t_vertex *v, int x, int y);
 void				vertex_draw(t_image *img, t_vertex *v, int pipet);
 

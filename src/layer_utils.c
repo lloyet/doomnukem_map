@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/06 17:20:34 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 21:35:31 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 22:53:21 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -15,7 +15,8 @@
 
 void				layer_add(t_layer *l, t_shape *s)
 {
-	payload_add(l->shape, l->iterator, (void*)s);
+	payload_add(l->shape, l->it_shape, (void*)s);
+	payload_next(l->shape, &l->it_shape);
 	return ;
 }
 
@@ -38,9 +39,8 @@ void				layer_draw(t_layer *layer)
 	return ;
 }
 
-t_vertex			*layer_has_vertex(t_layer *layer, t_vertex *v)
+t_shape				*layer_has_vertex(t_layer *layer, int x, int y)
 {
-	t_vertex		*v_cur;
 	t_node			*cur;
 
 	if (!layer->shape)
@@ -48,10 +48,9 @@ t_vertex			*layer_has_vertex(t_layer *layer, t_vertex *v)
 	cur = layer->shape->begin;
 	while (cur)
 	{
-		if ((v_cur = shape_has_vertex((t_shape*)cur->content, v)))
-			return (v_cur);
+		if (shape_has_vertex((t_shape*)cur->content, x, y))
+			return ((t_shape*)cur->content);
 		cur = cur->child;
 	}
-	v_cur = 0;
 	return (0);
 }

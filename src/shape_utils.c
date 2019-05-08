@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/06 15:36:06 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 21:32:53 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 18:18:39 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -44,7 +44,7 @@ void				shape_remove(t_shape *s)
 	return ;
 }
 
-t_vertex			*shape_has_vertex(t_shape *s, t_vertex *v)
+t_vertex			*shape_has_vertex(t_shape *s, int x, int y)
 {
 	t_vertex	*vcur;
 	t_node		*cur;
@@ -53,8 +53,8 @@ t_vertex			*shape_has_vertex(t_shape *s, t_vertex *v)
 	while (cur)
 	{
 		vcur = (t_vertex*)cur->content;
-		if (((v->x > vcur->x - 6) && (v->x < vcur->x + 6)) &&
-			((v->y > vcur->y - 6) && (v->y < vcur->y + 6)))
+		if (((x > vcur->x - V_BOX) && (x < vcur->x + V_BOX)) &&
+			((y > vcur->y - V_BOX) && (y < vcur->y + V_BOX)))
 			return ((t_vertex*)cur->content);
 		cur = cur->child;
 	}

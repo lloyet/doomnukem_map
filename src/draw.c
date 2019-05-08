@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/22 17:33:22 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 00:06:32 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 10:59:42 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -44,7 +44,7 @@ void				image_square(t_image *img, t_vertex *v, int color)
 	while (heigh < HEIGH)
 	{
 		width = 0;
-		while (width < 250)
+		while (width < O_SKETCH)
 			image_pixel_put(img, v->x + width++, v->y + heigh, color);
 		heigh++;
 	}

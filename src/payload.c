@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/30 12:14:08 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 15:28:46 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 14:01:13 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -50,8 +50,9 @@ void				payload_remove(t_payload *p, t_node **iterator)
 		next = (*iterator)->parent;
 	if (!((*iterator)->child) && ((*iterator)->parent))
 		p->index -= (p->index - 1) > -1 ? 1 : 0;
-	if (((*iterator)->child && (*iterator)->parent)
-		|| (!(*iterator)->child && (*iterator)->parent))
+/*	if (((*iterator)->child && (*iterator)->parent)
+		|| (!(*iterator)->child && (*iterator)->parent))*/
+	if ((*iterator)->parent)
 	{
 		node_remove(*iterator, p->destroy);
 		*iterator = next;

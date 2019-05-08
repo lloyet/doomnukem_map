@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/23 17:04:49 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 21:44:02 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/08 23:16:36 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -32,6 +32,7 @@ t_gui				*new_gui(t_layer *background)
 
 	if (!(gui = (t_gui*)ft_memalloc(sizeof(t_gui))))
 		return (0);
+	gui->pipet = P_PLAYER;
 	gui->layer = new_payload((void*)background, &gui_destroy_layer);
 	gui->iterator = new_iterator(gui->layer);
 	return (gui);
