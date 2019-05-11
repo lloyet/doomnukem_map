@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/05 07:43:35 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 22:22:14 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/11 16:00:55 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -35,6 +35,7 @@ t_shape				*new_shape(t_vertex *vertex)
 
 	if (!(shape = (t_shape*)ft_memalloc(sizeof(t_shape))))
 		return (0);
+	printf("new_shape = %p\n", shape);
 	shape->vertex = new_payload((void*)vertex, &destroy_shape_vertex);
 	shape->iterator = new_iterator(shape->vertex);
 	return (shape);

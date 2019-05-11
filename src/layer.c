@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/04 19:57:51 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/11 15:34:12 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/11 16:02:10 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -41,7 +41,8 @@ t_layer				*new_layer(t_image *img, t_mode m)
 
 	if (!(layer = (t_layer*)ft_memalloc(sizeof(t_layer))))
 		return (0);
-	layer->spawn = new_vertex(-1, -1);
+	printf("new_layer = %p\n", layer);
+	layer->spawn = m != L_NO_DRAW ? new_vertex(-1, -1) : 0;
 	layer->img = img;
 	layer->scale = G_SCALE;
 	layer->mode = m;

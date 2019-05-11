@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/06 12:24:02 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 23:04:54 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/11 16:00:48 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -31,6 +31,7 @@ t_vertex			*new_vertex(int x, int y)
 
 	if (!(vertex = (t_vertex*)ft_memalloc(sizeof(t_vertex))))
 		return (0);
+	printf("new_vertex = %p\n", vertex);
 	vertex->x = x;
 	vertex->y = y;
 	return (vertex);
