@@ -6,12 +6,25 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/06 17:20:34 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 22:53:21 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/09 00:38:06 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../inc/doom_map.h"
+
+static void			layer_draw_entity(t_layer *l)
+{
+	t_node		*cur;
+
+	cur = l->entity->begin;
+	while (cur)
+	{
+		vertex_draw(l->img, (t_vertex*)cur->content, CLR_ENTITY);
+		cur = cur->child;
+	}
+	return ;
+}
 
 void				layer_add(t_layer *l, t_shape *s)
 {
@@ -36,6 +49,9 @@ void				layer_draw(t_layer *layer)
 			cur = cur->child;
 		}
 	}
+	if (layer->entity)
+		layer_draw_entity(layer);
+	vertex_draw(layer->img, layer->spawn, CLR_PLAYER);
 	return ;
 }
 

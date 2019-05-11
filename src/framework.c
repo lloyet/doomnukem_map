@@ -6,12 +6,18 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/13 20:37:34 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/04 19:04:05 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/11 13:56:20 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
 #include "../inc/doom_map.h"
+
+int				destroy_window_hook(t_engine *engine)
+{
+	engine_destroy(engine);
+	return (0);
+}
 
 void				window_destroy(t_window *win)
 {

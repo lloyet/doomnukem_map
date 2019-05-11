@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/06 15:36:06 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 18:18:39 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/09 00:25:33 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -18,7 +18,7 @@ void				shape_draw(t_shape *shape, t_image *img, int pipet)
 	t_node			*cur;
 
 	cur = shape->vertex->begin;
-	vertex_draw(img, (t_vertex*)cur->content, CLR_STR);
+	vertex_draw(img, (t_vertex*)cur->content, CLR_VERTEX_1);
 	cur = cur->child;
 	while (cur)
 	{

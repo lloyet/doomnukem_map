@@ -6,12 +6,12 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/03/28 20:17:08 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 18:03:43 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/11 13:59:15 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../inc/doom_map.h"
+#include "../inc/libhook.h"
 
 void				mouse_destroy(t_mouse *mouse)
 {
@@ -36,13 +36,13 @@ void				keyboard_destroy(t_keyboard *keyboard)
 	return ;
 }
 
-t_keyboard			*new_keyboard(int size)
+t_keyboard			*new_keyboard(void)
 {
 	t_keyboard		*keyboard;
 
 	if (!(keyboard = (t_keyboard*)ft_memalloc(sizeof(t_keyboard))))
 		return (0);
-	if (!(keyboard->reg_id = (uint8_t *)ft_memalloc(sizeof(uint8_t) * size)))
+	if (!(keyboard->reg_id = (uint8_t *)ft_memalloc(sizeof(uint8_t) * KEYBOARD_S)))
 		return (0);
 	return (keyboard);
 }

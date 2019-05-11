@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/22 17:52:25 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 23:01:52 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/09 00:42:04 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -20,7 +20,7 @@ static void			event_edit_shape(t_keyboard *k, t_layer *l)
 		if (key_is_rising(k, KEY_PAD_ADD) && l->s_tmp)
 			l->s_tmp->ceil++;
 		else if (key_is_rising(k, KEY_PAD_SUB) && l->s_tmp
-			&& (l->s_tmp->ceil - 1 > - 1))
+			&& (l->s_tmp->ceil - 1 > -1))
 			l->s_tmp->ceil--;
 	}
 	else if (key_is_pressed(k, KEY_F))
@@ -69,15 +69,17 @@ static void			edit_tmp(t_layer *l, t_vertex *v)
 	return ;
 }
 
-static void			event_editor(t_mouse *m, t_keyboard *k, t_layer *l)
+static void			event_editor(t_mouse *m, t_keyboard *k,
+					t_layer *l, t_gui *g)
 {
 	t_vertex		*v;
 
 	event_edit_shape(k, l);
-	if (((m->x > O_SKETCH - 1) && (m->x < WIDTH)) && ((m->y > - 1) && (m->y < HEIGH)))
+	if (((m->x > O_SKETCH - 1) && (m->x < WIDTH))
+		&& ((m->y > -1) && (m->y < HEIGH)))
 	{
 		if (key_is_rising(k, MOUSE_RIGHT))
-			event_pipet(l, l->pipet, m->x, m->y);
+			event_pipet(l, g->pipet, m->x, m->y);
 		else if (key_is_rising(k, KEY_DEL) && l->s_tmp)
 			delete_tmp(l);
 		else if (key_is_rising(k, MOUSE_LEFT) || (key_is_pressed(k, MOUSE_MID)))
@@ -109,13 +111,12 @@ void				event_refresh(t_engine *e)
 			e->gui->pipet = P_PLAYER;
 		else if (key_is_rising(e->keyboard, KEY_2))
 			e->gui->pipet = P_ENTITY;
-		event_gui_mode(e->keyboard, l);
+		event_gui_mode(e->keyboard, l, e->gui);
 	}
 	if (l->mode == L_EDIT)
-		event_editor(e->mouse, e->keyboard, l);
+		event_editor(e->mouse, e->keyboard, l, e->gui);
 	else if (l->mode == L_VISUAL)
 		event_visual(e->mouse, e->keyboard, l);
 	event_gui_manage(e->mlx, e->keyboard, e->gui);
-	event_gui_mode(e->keyboard, l);
 	return ;
 }

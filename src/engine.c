@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/13 20:07:01 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 22:40:06 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/11 14:00:32 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -32,6 +32,7 @@ static void				device_register_keys(t_keyboard *k)
 	register_new_key(k, KEY_S);
 	register_new_key(k, KEY_1);
 	register_new_key(k, KEY_2);
+	return ;
 }
 
 void					engine_destroy(t_engine *e)
@@ -50,13 +51,13 @@ t_engine				*new_engine(void)
 	t_image				*bg;
 	t_vertex			v;
 
-	v.x  = 0;
+	v.x = 0;
 	v.y = 0;
 	if (!(e = (t_engine *)ft_memalloc(sizeof(t_engine))))
 		return (0);
 	if (!(e->mlx = new_framework()))
 		return (0);
-	if (!(e->keyboard = new_keyboard(KEYBOARD_S)))
+	if (!(e->keyboard = new_keyboard()))
 		return (0);
 	if (!(e->mouse = new_mouse(e->keyboard)))
 		return (0);

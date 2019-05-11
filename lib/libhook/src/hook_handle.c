@@ -11,7 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../inc/doom_map.h"
+#include "../inc/libhook.h"
 
 void			register_new_key(t_keyboard *keyboard, int key)
 {

@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/13 21:12:24 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 23:20:49 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/09 01:05:39 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -59,15 +59,40 @@ static void			debug_layer(t_engine *e)
 static void			debug_entity(t_engine *e)
 {
 	mlx_string_put(e->mlx->id, e->mlx->win->id, 25, 275,
-		CLR_STR, "-~- [PIPET] -~-");
+		CLR_STR, "-~- [SPAWN] -~-");
 	mlx_string_put(e->mlx->id, e->mlx->win->id, 25, 300, CLR_VAR,
-		e->gui->pipet != P_ENTITY ? "     SPAWN" : "    ENTITY");
+		e->gui->pipet != P_ENTITY ? "    PLAYER" : "    ENTITY");
 	return ;
 }
 
 static void			debug_menu(t_engine *e)
 {
-	(void)e;
+	mlx_string_put(e->mlx->id, e->mlx->win->id, 250, 50,
+	CLR_STR, "*** [KEYS] ***");
+	mlx_string_put(e->mlx->id, e->mlx->win->id, 250, 100, CLR_VAR,
+	"CTRL + : upper layer");
+	mlx_string_put(e->mlx->id, e->mlx->win->id, 250, 150, CLR_VAR,
+	"CTRL - : lower layer");
+	mlx_string_put(e->mlx->id, e->mlx->win->id, 250, 200, CLR_VAR,
+	"DEL : delete last segment");
+	mlx_string_put(e->mlx->id, e->mlx->win->id, 250, 250, CLR_VAR,
+	"Left clic : draw segment");
+	mlx_string_put(e->mlx->id, e->mlx->win->id, 250, 300, CLR_VAR,
+	"Wheel pressed : draw on cursor");
+	mlx_string_put(e->mlx->id, e->mlx->win->id, 250, 350, CLR_VAR,
+	"F + / - : increase / decrease floor");
+	mlx_string_put(e->mlx->id, e->mlx->win->id, 250, 400, CLR_VAR,
+	"C + / - : increase / decrease ceil");
+	mlx_string_put(e->mlx->id, e->mlx->win->id, 250, 450, CLR_VAR,
+	"1 : spawns player");
+	mlx_string_put(e->mlx->id, e->mlx->win->id, 250, 500, CLR_VAR,
+	"2 : spawns entities");
+	mlx_string_put(e->mlx->id, e->mlx->win->id, 250, 550, CLR_VAR,
+	"V : visual / edit");
+	mlx_string_put(e->mlx->id, e->mlx->win->id, 250, 600,
+		0x00CB4B16, "Current layer");
+	mlx_string_put(e->mlx->id, e->mlx->win->id, 250, 650,
+		0x006C71C4, "Last layer");
 	return ;
 }
 

@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/04 19:57:51 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/08 23:07:01 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/09 00:40:35 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -27,13 +27,15 @@ void				layer_destroy(t_layer *layer)
 		vertex_destroy(layer->v_tmp);
 	if (layer->shape)
 		payload_destroy(layer->shape);
+	if (layer->entity)
+		payload_destroy(layer->entity);
 	vertex_destroy(layer->spawn);
 	image_destroy(layer->img);
 	ft_memdel((void**)&layer);
 	return ;
 }
 
-t_layer				*new_layer(t_image *img, e_mode m)
+t_layer				*new_layer(t_image *img, t_mode m)
 {
 	t_layer		*layer;
 
@@ -55,7 +57,7 @@ void				layer_init(t_layer *l, t_shape *s)
 	return ;
 }
 
-void				layer_entity(t_layer *l, t_vertex *e)
+void				layer_add_entity(t_layer *l, t_vertex *e)
 {
 	payload_add(l->entity, l->it_entity, (void*)e);
 	payload_next(l->entity, &l->it_entity);

@@ -3,10 +3,10 @@
 #                                                               /              #
 #    Makefile                                         .::    .:/ .      .::    #
 #                                                  +:+:+   +:    +:  +:+:+     #
-#    By: l.cyet <marvin@le-101.fr>                  +:+   +:    +:    +:+      #
+#    By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+      #
 #                                                  #+#   #+    #+    #+#       #
 #    Created: 2017/12/10 13:40:19 by l.cyet       #+#   ##    ##    #+#        #
-#    Updated: 2018/10/23 00:38:39 by lloyet      ###    #+. /#+    ###.fr      #
+#    Updated: 2019/05/11 14:13:43 by lloyet      ###    #+. /#+    ###.fr      #
 #                                                          /                   #
 #                                                         /                    #
 # **************************************************************************** #
@@ -38,6 +38,8 @@ SRC = ft_memset.c ft_bzero.c ft_memcpy.c ft_memmove.c ft_memchr.c \
 OBJ = $(addprefix $(OBJDIR), $(SRC:.c=.o))
 
 .PHONY: all re fclean clean
+.SILENT: $(OBJDIR) fclean clean re
+
 all: $(OBJDIR) $(NAME)
 
 $(NAME): $(OBJ)
@@ -46,7 +48,7 @@ $(NAME): $(OBJ)
 	@echo "[$(NAME)]: all done."
 
 $(OBJDIR)%.o: $(SRCDIR)%.c
-	@$(CC) $(CFLAGS) -I $(INCDIR) -c $< -o $@
+	$(CC) $(CFLAGS) -I $(INCDIR) -c $< -o $@
 
 $(OBJDIR):
 	@mkdir -p $@

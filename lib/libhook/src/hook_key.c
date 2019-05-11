@@ -1,39 +1,28 @@
 /* ************************************************************************** */
 /*                                                          LE - /            */
 /*                                                              /             */
-/*   iterator.c                                       .::    .:/ .      .::   */
+/*   hook_key.c                                       .::    .:/ .      .::   */
 /*                                                 +:+:+   +:    +:  +:+:+    */
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
-/*   Created: 2019/05/04 17:45:32 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 21:37:03 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Created: 2019/04/17 02:53:12 by lloyet       #+#   ##    ##    #+#       */
+/*   Updated: 2019/05/11 13:53:12 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../inc/doom_map.h"
+#include "../inc/libhook.h"
 
-t_node				*new_iterator(t_payload *p)
+int				key_press_hook(int key, t_keyboard *keyboard)
 {
-	return (p->begin);
+	keyboard->reg_rise |= 1 << keyboard->reg_id[key];
+	keyboard->reg_key |= 1 << keyboard->reg_id[key];
+	return (0);
 }
 
-void				payload_next(t_payload *p, t_node **iterator)
+int				key_release_hook(int key, t_keyboard *keyboard)
 {
-	*iterator = (*iterator)->child;
-	p->index++;
-	return ;
-}
-
-void				payload_prev(t_payload *p, t_node **iterator)
-{
-	*iterator = (*iterator)->parent;
-	p->index--;
-	return ;
-}
-
-void				payload_iter(t_payload *p, void (*f)(void *content))
-{
-	node_iter(p->begin, f);
-	return ;
+	keyboard->reg_fall |= 1 << keyboard->reg_id[key];
+	keyboard->reg_key ^= 1 << keyboard->reg_id[key];
+	return (0);
 }

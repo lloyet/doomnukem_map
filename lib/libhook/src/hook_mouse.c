@@ -11,7 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include "../inc/doom_map.h"
+#include "../inc/libhook.h"
 
 int			mouse_motion_hook(int x, int y, t_mouse *mouse)
 {
