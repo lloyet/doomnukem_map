@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/04/16 19:44:01 by augberna     #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/11 13:56:36 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/11 15:29:06 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -114,7 +114,6 @@ typedef struct		s_layer
 	t_node			*it_entity;
 	t_payload		*entity;
 	t_mode			mode;
-	int				pipet;
 	int				scale;
 }					t_layer;
 
@@ -170,7 +169,7 @@ t_layer				*new_layer(t_image *img, t_mode m);
 void				layer_add_entity(t_layer *l, t_vertex *e);
 void				layer_init(t_layer *l, t_shape *s);
 
-void				layer_draw(t_layer *layer);
+void				layer_draw(t_layer *layer, int pipet);
 t_shape				*layer_has_vertex(t_layer *layer, int x, int y);
 void				layer_add(t_layer *l, t_shape *s);
 

@@ -15,7 +15,7 @@ NAME = DOOM_MAP
 
 # COMPILER#
 CC	= clang
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -ggdb
 
 # DIR
 SRCDIR = ./src/
@@ -94,6 +94,7 @@ $(LIBMLX):
 	make -C $(MLX)
 
 clean:
+	@echo "Cleaning ..."
 	rm -rf $(OBJDIR)
 	make clean -C $(FT)
 	make clean -C $(HK)

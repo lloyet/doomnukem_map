@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/06 17:20:34 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/09 00:38:06 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/11 15:28:56 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -33,25 +33,26 @@ void				layer_add(t_layer *l, t_shape *s)
 	return ;
 }
 
-void				layer_draw(t_layer *layer)
+void				layer_draw(t_layer *layer, int pipet)
 {
 	t_node			*cur;
 
 	image_fill(layer->img, CLR_A);
 	if (layer->s_tmp)
-		shape_draw(layer->s_tmp, layer->img, layer->pipet);
+		shape_draw(layer->s_tmp, layer->img, pipet);
 	if (layer->shape)
 	{
 		cur = layer->shape->begin;
 		while (cur)
 		{
-			shape_draw((t_shape*)cur->content, layer->img, layer->pipet);
+			shape_draw((t_shape*)cur->content, layer->img, pipet);
 			cur = cur->child;
 		}
 	}
 	if (layer->entity)
 		layer_draw_entity(layer);
-	vertex_draw(layer->img, layer->spawn, CLR_PLAYER);
+	if (layer->spawn->x > - 1 && layer->spawn->y > - 1)
+		vertex_draw(layer->img, layer->spawn, CLR_PLAYER);
 	return ;
 }
 

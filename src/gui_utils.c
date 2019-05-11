@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/02 02:39:27 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/07 21:36:23 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/11 15:30:57 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -31,13 +31,19 @@ void				gui_display(t_gui *gui)
 	gui_display_layer(gui->layer->begin->content);
 	if (gui->iterator != gui->layer->begin)
 	{
-		layer_draw((t_layer*)gui->iterator->content);
+		ft_putstr("x\n");
+		layer_draw((t_layer*)gui->iterator->content, CLR_LAYER);
+		ft_putstr("y\n");
 		if (gui->iterator->parent && gui->iterator->parent != gui->layer->begin)
 		{
-			layer_draw((t_layer*)gui->iterator->parent->content);
+			ft_putstr("a\n");
+			layer_draw((t_layer*)gui->iterator->parent->content, CLR_SHADOW);
+			ft_putstr("b\n");
 			gui_display_layer(gui->iterator->parent->content);
+			ft_putstr("c\n");
 		}
 		gui_display_layer(gui->iterator->content);
+		ft_putstr("d\n");
 	}
 	return ;
 }
@@ -45,21 +51,13 @@ void				gui_display(t_gui *gui)
 void				gui_next(t_gui *gui)
 {
 	if (gui->iterator->child)
-	{
-		((t_layer*)(gui->iterator->content))->pipet = CLR_SHADOW;
 		payload_next(gui->layer, &gui->iterator);
-		((t_layer*)(gui->iterator->content))->pipet = CLR_LAYER;
-	}
 	return ;
 }
 
 void				gui_prev(t_gui *gui)
 {
 	if (gui->iterator->parent)
-	{
-		((t_layer*)(gui->iterator->content))->pipet = CLR_SHADOW;
 		payload_prev(gui->layer, &gui->iterator);
-		((t_layer*)(gui->iterator->content))->pipet = CLR_LAYER;
-	}
 	return ;
 }

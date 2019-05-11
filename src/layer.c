@@ -6,7 +6,7 @@
 /*   By: lloyet <lloyet@student.le-101.fr>          +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/05/04 19:57:51 by lloyet       #+#   ##    ##    #+#       */
-/*   Updated: 2019/05/09 00:40:35 by lloyet      ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/05/11 15:34:12 by lloyet      ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -43,7 +43,6 @@ t_layer				*new_layer(t_image *img, t_mode m)
 		return (0);
 	layer->spawn = new_vertex(-1, -1);
 	layer->img = img;
-	layer->pipet = CLR_LAYER;
 	layer->scale = G_SCALE;
 	layer->mode = m;
 	image_fill(layer->img, CLR_A);
